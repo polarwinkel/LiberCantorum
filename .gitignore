@@ -1,0 +1,11 @@
+out/
+*.midi
+*.pdf
+*.svg
+scores/*
+!scores/_*/*.ly
+!scores/_*/*.yaml
+scores/_*
+book/
+*.bak
+canti.yaml

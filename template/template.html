@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="polar.css" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+
+        <style>
+            
+@media only screen and (min-width: 981px) {
+    html {
+        margin: 1em;
+        font-size: 1.2em;
+    }
+    body {
+        padding: 4em;
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+}
+
+        </style>
+
+  </head>
+  <body>
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none">
+        <symbol id="home" viewBox="0 0 32 32">
+            <polyline points="6,30 6,14 2,18 16,4 24,12 24,4 24,12 30,18 26,14 26,30 4,30" style="fill:none;stroke-width:4"/>
+        </symbol>
+    </svg>
+    <div id="page">
+        <header>
+            <div style="height:0; width:0; margin-top:-5.8rem; margin-bottom:1rem;">
+                <p style="font-size:3.8rem; color:rgba(127,127,127,0.15)">LiberCantorum</p>
+            </div>
+            <p id="nav" class="no-print" style="width:100%; background-color:080; text-align:right; margin-top:4em; margin-bottom:-3em;">
+                <a href="index.html">&nbsp;
+                    <svg width="1em" height="1em" stroke="currentColor">
+                        <use xlink:href="#home" />
+                    </svg>
+                </svg>&nbsp;</a>
+            </p>
+            <h1>{{ title }}</h1>
+        </header>
+        <main>
+            {% if score is defined %}
+            <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+            <img class="svg" src="{{ score }}" alt="{{ title }} - score" style="width:28rem;"><br>
+            {% endif %}
+            {% if file is defined %}
+            <midi-player src="{{ file }}.midi" sound-font visualizer="#myStaffVisualizer">
+            </midi-player>
+            <midi-visualizer type="staff" id="myStaffVisualizer" src="lilypond.midi" style="background-color:#fff">
+            </midi-visualizer>
+            {% endif %}
+            <p class="lyrics">{{ lyrics }}</p>
+            
+        </main>
+    
+    </div>
+    <footer>
+        <p id="copyright" class="no-print" style="width:100%; background-color:080; text-align:right; font-size:0.6rem;">
+            LiberCantorum v0.2.0dev (c) 2025 by Dirk Winkel, licensed under GPLv3 or newer
+        </p>
+    </footer>
+  </body>
+</html>
