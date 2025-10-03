@@ -2,10 +2,13 @@ out/
 *.midi
 *.pdf
 *.svg
-scores/*
-!scores/_*/*.ly
-!scores/_*/*.yaml
-scores/_*
+
+scores/**
+!scores/**/*.ly
+!scores/**/*.yaml
+!scores/**/_*/
+scores/**/_*/
+
 book/
 *.bak
 canti.yaml
