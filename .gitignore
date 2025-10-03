@@ -4,8 +4,8 @@ out/
 *.svg
 
 scores/**
-!scores/**/*.ly
-!scores/**/*.yaml
+!scores/*/*.ly
+!scores/*/*.yaml
 !scores/_*/
 scores/_*/
 
