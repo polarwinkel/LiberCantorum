@@ -6,8 +6,8 @@ out/
 scores/**
 !scores/**/*.ly
 !scores/**/*.yaml
-!scores/**/_*/
-scores/**/_*/
+!scores/_*/
+scores/_*/
 
 book/
 *.bak
