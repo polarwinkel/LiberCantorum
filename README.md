@@ -44,6 +44,8 @@ In LaTeX-Manier ist das pdf-Liederbuch auf großzügige, und damit übersichtlic
 ## Geplante Features
 
 - das pdf hübscher machen
+- Index der Titel und der Liedanfänge
+- ggf. (optionale) thematische Sortierung/Kapitel
 - Midi-Tempo-Anpassung, z.B. per Slider. Das wird aktuell [für die midi-Bibliothek diskutiert](https://github.com/cifkao/html-midi-player/issues/86). Falls das nicht kommt gibt es [einen Workaround für die Bibliothek](https://github.com/cifkao/html-midi-player/issues/21). Solange da das Eisen heiß ist warte ich ab.
 - Zusatz-Information wie Autor, Erscheinungsjahr etc. in die `lyrics.yaml` aufnehmen. (könnte man schon rein schreiben, würde aktuell ignoriert)
 - einzelnen Cantus als pdf zum Download anbieten
