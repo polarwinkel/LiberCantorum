@@ -55,7 +55,7 @@ def renderIndex(canti):
     with open('template/template.html', 'r') as f:
         tpl = f.read()
     template = jinja2.Template(tpl)
-    out = template.render(title='Index', lyrics=out)
+    out = template.render(title='LiberCantorum', lyrics=out)
     with open('out/index.html', 'w') as f:
         f.write(out)
 
