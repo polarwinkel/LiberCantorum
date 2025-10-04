@@ -36,7 +36,7 @@ _(bei nicht-Zustimmung gerne eine Issue erstellen um es zu diskutieren)_
 Die Lilypond-Dateien sollen auf einen Druck auf Din-A5-Format ausgelegt sein, wobei diese auch in schwachem Licht auch von älteren Menschen lesbar sein sollen.
 Dadurch ist auch ein Druck in kleiner auf ansonsten üblicher Liederbuch-Größe gewährleistet.
 
-Entgegen vieler Liederbücher sollen die Noten möglichst nicht zufällig umbrechen, sondern nach einer sinnvollen Taktzahl um die Orientierung zu verbessern - auf Kosten von etwas Platz.
+Entgegen vieler Liederbücher sollen die Noten - sofern sinnvoll möglich - nicht zufällig umbrechen, sondern an geeigneten Stellen, um die Orientierung zu verbessern - auf Kosten von etwas Platz.
 Gleiches gilt für die Strophen.
 
 In LaTeX-Manier ist das pdf-Liederbuch auf großzügige, und damit übersichtliche, Platznutzung angelegt. Die erzeugte LaTeX-Quelldatei kann bei Bedarf nach dem Build manuell angepasst werden.
