@@ -9,19 +9,18 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \relative {
-  \key c \major % Tonart
+  \key d \minor % Tonart
   \time 4/4
-  %\alternative{{e8 e8}{e4}}
-  e'4 e4 f4 g4 g4 f4 e4 d4 |c4 c4 d4 e4 e4. d8 d4 r4 \break
-  e4 e4 f4 g4 g4 f4 e4 d4 | c4 c4 d4 e4 d4. c8 c4 r4 \break
-  d4 d4 e4 c4 d4 e8 f8 e4 c4 | d4 e8 f8 e4 d4 | c4 d4 g,4 e'2 \break
-  e4 f4 g4 g4 f4 e4 d4 c4 c4 d4 e4 d4. c8 c4 % "|."
+  c'4 f4. c8 a'4 g4 f2 c4 f8 g8 a4 a4 bes4 a4 g2 r4 \break
+  g4 a4. g8 a4 | bes4 c2 d4 | bes4 a4 a4 g4 | g4 f2 r4 \break
+  g4 e8 f8 g4 a4 g4. e8 c4 c4 bes'4. bes8 a4. a8 g2 r4 \break
+  g4 a4. g8 a4 bes4 c2 d4 bes4 a4 a4 g4 g4 f2 % "|."
 }
 verseOne = \lyricmode {
- Freu -- de schö -- ner Göt -- ter -- fun -- ken Toch -- ter aus E -- ly -- si -- um,
- wir be -- tre -- ten feu -- er -- trun -- ken himm -- lisch -- e dein Hei -- lig -- tum!
- Dei -- ne Zau -- ber bin -- den _ wie -- der was die _ Mo -- de streng ge -- teilt
- Al -- le Men -- schen wer -- den Brü -- der wo dein sanf -- ter Flü -- gel weilt!
+  In al -- len gu -- ten Stun -- den, er _ -- höht von lieb und Wein, 
+  soll die -- ses Lied ver -- bun -- den von uns ge -- sun -- gen sein.
+  Uns hält der Gott zu -- sa _ -- men, der uns hier -- her ge -- bracht,
+  er -- neu -- ert uns -- re Flam -- men, er hat sie an -- ge -- facht.
 }
 
 \score {
@@ -56,6 +55,6 @@ verseOne = \lyricmode {
     }
   >>
   \midi {
-    \tempo 2 = 70
+    \tempo 2 = 68
   }
 }
