@@ -1,8 +1,12 @@
 #!/bin/python3
 
-import yaml, jinja2, os
+import yaml, jinja2, os, sys
 from shutil import copyfile
 import subprocess
+
+rebuildLilypond = False # speed up, has been build manually likely; TODO: command-line option?
+cleanupLilySvg = True # remove leaking garbage (homedir) in svg-file
+
 
 def getCantus(folder):
     '''get the cantus-data from the yaml-file'''
@@ -12,12 +16,14 @@ def getCantus(folder):
 
 def lilyCantus(cantus):
     '''create svg- and midi-file for the score.ly-file in a folder'''
-    p = subprocess.Popen(['lilypond', '--svg', '-s', 'score.ly'], cwd='scores/'+cantus['folder'])
-    p.wait()
-    # get rid of leaking garbage in the svg-file:
-    p  = subprocess.Popen(['sed', '-E', '-i', 's/xlink:href="textedit:[^"]*"//g', 'score.svg'], 
-            cwd='scores/'+cantus['folder'])
-    p.wait()
+    if not os.path.isfile('scores/'+cantus['folder']+'/score.svg') or rebuildLilypond:
+        p = subprocess.Popen(['lilypond', '--svg', '-s', 'score.ly'], cwd='scores/'+cantus['folder'])
+        p.wait()
+    if cleanupLilySvg:
+        # get rid of leaking garbage (homedir) in the Lilypond-created svg-file:
+        p  = subprocess.Popen(['sed', '-E', '-i', 's/xlink:href="textedit:[^"]*"//g', 'score.svg'], 
+                cwd='scores/'+cantus['folder'])
+        p.wait()
     # crop:
     p  = subprocess.Popen(['inkscape', '-D', '-l', '-o', 'out/'+cantus['file']+'.svg',
             'scores/'+cantus['folder']+'/score.svg'], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL) 
@@ -114,10 +120,13 @@ def run():
         c['title'] = cant['title']
         c['strophes'] = cant['strophes']
         # uncomment to speed up for testing:
-        lilyCantus(c) # TODO: check and remember if successful
+        sys.stdout.write('building: '+c['folder']+'...\n')
+        lilyCantus(c)
         renderCantus(c)
+    sys.stdout.write('done with canti, creating index and book...\n')
     renderIndex(canti)
     renderBook(canti)
     copyfile('book/LiberCantorum.pdf', 'out/LiberCantorum.pdf')
+    sys.stdout.write('all done!\n')
 
 run()
