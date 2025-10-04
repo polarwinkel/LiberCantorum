@@ -3,11 +3,10 @@ out/
 *.pdf
 *.svg
 
-scores/**
-!scores/*/*.ly
-!scores/*/*.yaml
-!scores/_*/
-scores/_*/
+scores/_*
+scores/*/*.midi
+scores/*/*.pdf
+scores/*/*.svg
 
 book/
 *.bak
