@@ -35,13 +35,13 @@
             {% if file is defined %}
             <midi-player src="{{ file }}.midi" sound-font visualizer="#myStaffVisualizer">
             </midi-player>
-            <midi-visualizer type="staff" id="myStaffVisualizer" src="lilypond.midi" style="background-color:#fff">
+            <midi-visualizer type="staff" id="myStaffVisualizer" src="{{ file }}.midi" style="background-color:#fff">
             </midi-visualizer>
             {% endif %}
             <p class="lyrics">{{ lyrics }}</p>
-            
+
         </main>
-    
+
     </div>
     <footer>
         <p id="copyright" class="no-print" style="width:100%; background-color:080; text-align:right; font-size:0.6rem;">
