@@ -10,4 +10,5 @@ scores/*/
 book/
 *.bak
 canti.yaml
+/import
 __pycache__/
