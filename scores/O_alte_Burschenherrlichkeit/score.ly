@@ -1,31 +1,14 @@
 \version "2.24.4"
-% automatically converted by musicxml2ly from /tmp/O alte Burschenherrlichkeit.musicxml
-\pointAndClickOff
+\header {tagline=""}
+\paper  {
+myStaffSize = #20
+#(define fonts (make-pango-font-tree 
+    "Latin Modern Roman" "Latin Modern Sans" "Latin Modern Mono"
+    (/ myStaffSize 20)))
+}
+#(set-global-staff-size 25)
 
-\include "articulate.ly"
-
-\header {
-    encodingsoftware =  "MuseScore 2.3.2"
-    encodingdate =  "2025-10-07"
-    }
-
-#(set-global-staff-size 20.34285714285714)
-\paper {
-    
-    paper-width = 21.0\cm
-    paper-height = 29.7\cm
-    top-margin = 1.0\cm
-    bottom-margin = 2.0\cm
-    left-margin = 1.0\cm
-    right-margin = 1.0\cm
-    indent = 1.6153846153846154\cm
-    }
-\layout {
-    \context { \Score
-        autoBeaming = ##f
-        }
-    }
-PartPOneVoiceOne =  \relative c' {
+musicOne = \relative c' {
     \clef "treble" \key c \major | % 1
      c8 [  e8 ] s2. | % 2
      g4  g4  g8 [  a8  f8  d8
@@ -50,8 +33,8 @@ PartPOneVoiceOne =  \relative c' {
     ] | % 17
      d4  c4 \bar "|."
     }
-
-PartPOneVoiceOneLyricsOne =  \lyricmode {\set ignoreMelismata = ##t O
+verseOne = \lyricmode {
+   O
     " " al -- te Bur " " -- schen " " -- herr -- lich -- "keit," "wo-"
     hin bist du ent -- schwun -- "den?" Nie kehrst du wie -- "der," gold
     -- ne "Zeit," so froh und un -- " " \skip1 "ge- " bun -- "den!"
@@ -59,42 +42,40 @@ PartPOneVoiceOneLyricsOne =  \lyricmode {\set ignoreMelismata = ##t O
     de dei -- ne Spur " " nicht " " "mehr," " " " " o je -- "rum," je --
     "rum," je --\skip1 "rum," o quae mu -- ta\skip1 \skip1 tio re --
     "rum."
-    }
+}
 
-
-% The score definition
 \score {
-    <<
-        
-        \new Staff
-        <<
-            \set Staff.instrumentName = "unbenannt"
-            
-            \context Staff << 
-                \mergeDifferentlyDottedOn\mergeDifferentlyHeadedOn
-                \context Voice = "PartPOneVoiceOne" {  \PartPOneVoiceOne }
-                \new Lyrics \lyricsto "PartPOneVoiceOne" { \set stanza = "1." \PartPOneVoiceOneLyricsOne }
-                >>
-            >>
-        
-        >>
-    \layout {}
-    }
-\score {
-    \unfoldRepeats \articulate {
-        
-        \new Staff
-        <<
-            \set Staff.instrumentName = "unbenannt"
-            
-            \context Staff << 
-                \mergeDifferentlyDottedOn\mergeDifferentlyHeadedOn
-                \context Voice = "PartPOneVoiceOne" {  \PartPOneVoiceOne }
-                \new Lyrics \lyricsto "PartPOneVoiceOne" { \set stanza = "1." \PartPOneVoiceOneLyricsOne }
-                >>
-            >>
-        
+  <<
+    \new Staff {
+      \new Voice = "melody" {
+        \relative {
+          \musicOne
         }
-    \midi {\tempo 4 = 100 }
+      }
     }
-
+    \new Lyrics \lyricsto "melody" {
+      \verseOne
+    }
+  >>
+  \layout {
+    indent = 0.0
+  }
+}
+\score {
+  \unfoldRepeats
+  <<
+    \new Staff {
+      \new Voice = "melody" {
+        \relative {
+          \musicOne
+        }
+      }
+    }
+    \new Lyrics \lyricsto "melody" {
+      \verseOne
+    }
+  >>
+  \midi {
+    \tempo 2 = 68
+  }
+}
