@@ -2,10 +2,12 @@ out/
 *.midi
 *.pdf
 *.svg
-scores/*
-!scores/_*/*.ly
-!scores/_*/*.yaml
-scores/_*
+scores/_*/
+scores/*/
+!scores/[^_]*/
+!scores/[^_]*/*.ly
+!scores/[^_]*/*.yaml
 book/
 *.bak
 canti.yaml
+__pycache__/
