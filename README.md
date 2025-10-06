@@ -36,7 +36,16 @@ _(bei nicht-Zustimmung gerne eine Issue erstellen um es zu diskutieren)_
 Die Lilypond-Dateien sollen auf einen Druck auf Din-A5-Format ausgelegt sein, wobei diese auch in schwachem Licht auch von älteren Menschen lesbar sein sollen.
 Dadurch ist auch ein Druck in kleiner auf ansonsten üblicher Liederbuch-Größe gewährleistet.
 
-Entgegen vieler Liederbücher sollen die Noten möglichst nicht zufällig umbrechen, sondern nach einer sinnvollen Taktzahl um die Orientierung zu verbessern - auf Kosten von etwas Platz.
+Entgegen vieler Liederbücher sollen die Noten - sofern sinnvoll möglich - nicht zufällig umbrechen, sondern an geeigneten Stellen, um die Orientierung zu verbessern - auf Kosten von etwas Platz.
 Gleiches gilt für die Strophen.
 
 In LaTeX-Manier ist das pdf-Liederbuch auf großzügige, und damit übersichtliche, Platznutzung angelegt. Die erzeugte LaTeX-Quelldatei kann bei Bedarf nach dem Build manuell angepasst werden.
+
+## Geplante Features
+
+- das pdf hübscher machen
+- Index der Titel und der Liedanfänge
+- ggf. (optionale) thematische Sortierung/Kapitel
+- Midi-Tempo-Anpassung, z.B. per Slider. Das wird aktuell [für die midi-Bibliothek diskutiert](https://github.com/cifkao/html-midi-player/issues/86). Falls das nicht kommt gibt es [einen Workaround für die Bibliothek](https://github.com/cifkao/html-midi-player/issues/21). Solange da das Eisen heiß ist warte ich ab.
+- Zusatz-Information wie Autor, Erscheinungsjahr etc. in die `lyrics.yaml` aufnehmen. (könnte man schon rein schreiben, würde aktuell ignoriert)
+- einzelnen Cantus als pdf zum Download anbieten
