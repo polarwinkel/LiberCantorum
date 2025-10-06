@@ -23,7 +23,7 @@ def main():
         title = capx_file.stem
 
     # Zielverzeichnis erstellen
-    target_dir = Path("scores") / title
+    target_dir = Path("import") / title
     target_dir.mkdir(parents=True, exist_ok=True)
 
     # Dateipfade
