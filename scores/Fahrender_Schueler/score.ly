@@ -8,18 +8,22 @@ myStaffSize = #20
 }
 #(set-global-staff-size 25)
 
-musicOne = \relative c' {
-  \key c \major
-  c8 e8 g4 g4 g8 a8 f8 d8 c4 e4 e4 r8 e8 d4. e8 f4 g4 f4 e4 r4 \break
-  g4 g4. e8 c'4. b8 b4. a8 a4 a4 g4. a8 g8 [ e8 f8 d8 ] d4  c4 r4 \break
-  e4 d4 g4 g4 b4 b8 a8  c8  b8 a4 d,4 d4  a'4 a4 c4 c8 b8 d8 c8 b8 a8 \break
-  g8 f8 g4.  e8  c'4.  b8 b8 a8 a4 r4  a4 g4. a8 g8 e8 f8 d8 d4 c4 \bar "|."
-    }
+musicOne = \relative a {
+    \time 12/8 \key f \major | % 1
+     a8 d4.  e4  e8  d4.  a4  a8 c4.  bes4  bes8  a4. r4 \break
+     a8 d4.  d4  e8  f4.  f4  g8 a2. r8 f4  g8 a4.  g4  a8  d4. c4 a8 c4. \break
+     bes4  bes8  a4. r8  a8 a4.  a4  f8 f4. e4  f8 g2. \break
+     g8 a4. g4 a8 d4. c4  a8 c4.  bes4  bes8  a4. \break
+     r8  a8 a4.  f4  e8  d4. cis4 cis8 d2. \bar "|."
+}
 verseOne = \lyricmode {
-  O _ al -- te Bur _ -- schen _ -- herr -- lich -- keit, wo -- hin bist du ent -- schwun -- den?
-  Nie kehrst du wie -- der, gold -- ne Zeit, so froh und un _ -- ge _ -- bun -- den!
-  Ver -- ge -- bens spä -- he ich _ um _ -- her, ich fin -- de dei -- ne Spur _ nicht _ mehr, _
-  o _ je -- rum, je -- rum, je -- rum, _ o quae mu -- ta _ tio _ re -- rum.
+  Der
+    Sang ist ver -- schol -- len, der Wein ist ver -- raucht, 
+    stumm irr' ich und träu -- mend um -- her.
+    Es _ tau -- meln die Häu -- ser vom Stur -- me um -- haucht,
+    es tau -- meln die Wel -- len ins Meer, 
+    es tau -- meln die Häu -- ser vom Stur -- me um -- haucht,
+    es tau -- meln die Wel -- len ins Meer.
 }
 
 \score {

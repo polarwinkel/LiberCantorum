@@ -9,17 +9,17 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \relative c' {
-  \key c \major
-  c8 e8 g4 g4 g8 a8 f8 d8 c4 e4 e4 r8 e8 d4. e8 f4 g4 f4 e4 r4 \break
-  g4 g4. e8 c'4. b8 b4. a8 a4 a4 g4. a8 g8 [ e8 f8 d8 ] d4  c4 r4 \break
-  e4 d4 g4 g4 b4 b8 a8  c8  b8 a4 d,4 d4  a'4 a4 c4 c8 b8 d8 c8 b8 a8 \break
-  g8 f8 g4.  e8  c'4.  b8 b8 a8 a4 r4  a4 g4. a8 g8 e8 f8 d8 d4 c4 \bar "|."
+    \key c \major
+    c8 [ e8 g8 ] s4. c4 r8 g8 [ a8 b8 ] c8 [ b8 a8 ] d4 a8 g4. \break
+    b8 [ a8 b8 ] c4 g8 g4 f8 e4. b'8 [ a8 b8 ] c4 g8 g4 f8 e4. \break
+    c8 [ d8 e8 ] f4 c8 g'4 c,8 a'4 r8 g8 [ a8 b8 ] c4 g8 d'4 g,8 e'4. r4 r8 \break
+    d4. b4 b8 c4. \bar "|."
     }
 verseOne = \lyricmode {
-  O _ al -- te Bur _ -- schen _ -- herr -- lich -- keit, wo -- hin bist du ent -- schwun -- den?
-  Nie kehrst du wie -- der, gold -- ne Zeit, so froh und un _ -- ge _ -- bun -- den!
-  Ver -- ge -- bens spä -- he ich _ um _ -- her, ich fin -- de dei -- ne Spur _ nicht _ mehr, _
-  o _ je -- rum, je -- rum, je -- rum, _ o quae mu -- ta _ tio _ re -- rum.
+  Bur -- schen, her -- aus! Las -- set es schal -- len von Haus zu Haus!
+  Wenn _ der Ler -- che Sil -- ber -- schlag grüßt _ des Mai -- en er -- sten Tag,
+  dann _ her -- aus und fragt nicht viel, frisch _ mit Lied und Lau -- ten -- spiel!
+  Bur -- schen, her -- aus!
 }
 
 \score {
