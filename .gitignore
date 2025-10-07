@@ -11,4 +11,5 @@ book/
 *.bak
 canti.yaml
 /import
+*.capx
 __pycache__/
