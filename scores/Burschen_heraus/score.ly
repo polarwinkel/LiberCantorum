@@ -10,9 +10,9 @@ myStaffSize = #20
 
 musicOne = \relative c' {
     \key c \major
-    c8 [ e8 g8 ] s4. c4 r8 g8 [ a8 b8 ] c8 [ b8 a8 ] d4 a8 g4. \break
-    b8 [ a8 b8 ] c4 g8 g4 f8 e4. b'8 [ a8 b8 ] c4 g8 g4 f8 e4. \break
-    c8 [ d8 e8 ] f4 c8 g'4 c,8 a'4 r8 g8 [ a8 b8 ] c4 g8 d'4 g,8 e'4. r4 r8 \break
+    c8 e8 g8 c4 r8 g8 a8 b8 c8 b8 a8 d4 a8 g4. \break
+    b8 a8 b8 c4 g8 g4 f8 e4. b'8 a8 b8 c4 g8 g4 f8 e4. \break
+    c8 d8 e8 f4 c8 g'4 c,8 a'4 r8 g8 a8 b8 c4 g8 d'4 g,8 e'4. r4 r8 \break
     d4. b4 b8 c4. \bar "|."
     }
 verseOne = \lyricmode {

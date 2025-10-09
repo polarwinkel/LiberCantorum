@@ -11,9 +11,9 @@ myStaffSize = #20
 musicOne = \relative d' {
     \time 3/4
     \key g \major
-    d8 d8 d8 s4. g4 b4 a8 g8 a4. d,8 d8 d8 g4 b4 a8 g8 a4. \break
+    d8 d8 d8 g4 b4 a8 g8 a4. d,8 d8 d8 g4 b4 a8 g8 a4. \break
     b8 g8 a8 b8 d8 c8 b8 a8 g8 a8 c8 b8 a8 g8 a8 b4 r8 \break
-    b8 g8 a8 b8 d8 c8  b8 a8 g8 a8 c8 b8 a8 g fis4 g4 \bar "|."
+    b8 g8 a8 b8 d8 c8 b8 a8 g8 a8 c8 b8 a8 g fis4 g4 \bar "|."
 }
 verseOne = \lyricmode {
   Kein schö -- ner Land in die -- ser Zeit, als hier das uns -- re weit und breit,

@@ -9,7 +9,8 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \relative d' {
-    \clef "treble" \numericTimeSignature\time 4/4 \key g \major | % 1
+    \time 4/4
+    \key g \major
     d4 b'4 g4 e8. [ fis16 ] e8. [e16 ] d4 b4 r8  d8 [ e8 fis8 ] g4. g8 b4. a8 a2 r4 \break
     a4 c4. a8 fis8 [ fis8 e8 fis8 ] a4 g4 r8 g8 [ fis8 fis8 ] a4. fis8 fis4 g4 d2 r4 \break
     d4 a'4 fis4 d8 [ e8 fis8 g8 ] b4 g4 r8 g8 [ a8 b8 ] c4. a8 b4. g8 b4 ( a4 ) r4 \break

@@ -53,6 +53,6 @@ verseOne = \lyricmode {
     }
   >>
   \midi {
-    \tempo 2 = 68
+    \tempo 2 = 60
   }
 }
