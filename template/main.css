@@ -19,7 +19,7 @@ img {
     max-width: 100%;
 }
 /* stuff for forms: */
-label{
+label {
     display: inline-block;
     float: left;
     clear: left;
@@ -30,25 +30,25 @@ label{
 }
 input {
     font-size: 1rem;
-    max-width:100%;
+    max-width: 100%;
 }
 select {
     font-size: 1rem;
     width: 500px;
-    max-width:100%;
+    max-width: 100%;
 }
 textarea {
     display: inline-block;
     float: left;
     font-size: 0.7rem;
     width: 100%;
-    max-width:100%;
-    min-width:250px;
+    max-width: 100%;
+    min-width: 250px;
     height: 200px;
 }
 button {
-    min-width:250px;
-    max-width:100%;
+    min-width: 250px;
+    max-width: 100%;
 }
 /* other stuff */
 div.border {
@@ -60,7 +60,7 @@ select.selectSmall {
 input.inputSmall {
     width: 5rem;
 }
-p.date{
+p.date {
     font-size: 0.7rem;
     text-align: right;
     padding: 0;
@@ -78,9 +78,52 @@ p.date{
         padding-bottom: 1em;
     }
 }
+/* MIDI Controls Styling */
+.midi-controls {
+    padding: 8px;
+    margin: 8px 0;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.midi-controls label {
+    display: inline;
+    float: none;
+    clear: none;
+    width: auto;
+    text-align: left;
+    margin-right: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.midi-controls input[type="range"] {
+    vertical-align: middle;
+    margin: 0 8px;
+}
+
+.midi-controls span {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #666;
+    min-width: 40px;
+    display: inline-block;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #222;
         border: 1px solid black;
+    }
+
+    .midi-controls {
+        background-color: #333;
+        border-color: #555;
+        color: #ddd;
+    }
+
+    .midi-controls span {
+        color: #ccc;
     }
 }
