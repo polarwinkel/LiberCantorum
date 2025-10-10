@@ -33,10 +33,164 @@
             <img class="svg" src="{{ score }}" alt="{{ title }} - score" style="width:28rem;"><br>
             {% endif %}
             {% if file is defined %}
-            <midi-player src="{{ file }}.midi" sound-font visualizer="#myStaffVisualizer">
+            <div class="midi-controls no-print" style="margin-bottom: 10px;">
+                <label for="tempo-slider">Tempo: </label>
+                <input type="range" id="tempo-slider" min="50" max="200" value="100" step="5" style="width: 200px;">
+                <span id="tempo-value">100%</span>
+            </div>
+            <midi-player id="midi-player" src="{{ file }}.midi" sound-font visualizer="#myStaffVisualizer">
             </midi-player>
             <midi-visualizer type="staff" id="myStaffVisualizer" src="{{ file }}.midi" style="background-color:#fff">
             </midi-visualizer>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const tempoSlider = document.getElementById('tempo-slider');
+                    const tempoValue = document.getElementById('tempo-value');
+                    const midiPlayer = document.getElementById('midi-player');
+                    let originalTempo = 120; // Default BPM
+                    let player = null;
+                    let isPlayerReady = false;
+
+                    // Update tempo display
+                    tempoSlider.addEventListener('input', function() {
+                        tempoValue.textContent = this.value + '%';
+                    });
+
+                    // Try multiple approaches to access the internal player
+                    function findPlayer() {
+                        // Approach 1: Direct property access
+                        if (midiPlayer.player) {
+                            return midiPlayer.player;
+                        }
+
+                        // Approach 2: Private property access
+                        if (midiPlayer._player) {
+                            return midiPlayer._player;
+                        }
+
+                        return null;
+                    }
+
+                    // Extract tempo from note sequence
+                    function extractOriginalTempo() {
+                        try {
+                            if (midiPlayer.noteSequence) {
+                                const seq = midiPlayer.noteSequence;
+                                if (seq.tempos && seq.tempos.length > 0) {
+                                    originalTempo = seq.tempos[0].qpm || 120;
+                                    console.log('Extracted original tempo from noteSequence:', originalTempo);
+                                    return;
+                                }
+                            }
+
+                            // Fallback: try to get from player if available
+                            if (player && player.getPlayState) {
+                                const playState = player.getPlayState();
+                                if (playState && playState.noteSequence && playState.noteSequence.tempos) {
+                                    const tempos = playState.noteSequence.tempos;
+                                    if (tempos.length > 0) {
+                                        originalTempo = tempos[0].qpm || 120;
+                                        console.log('Extracted original tempo from player:', originalTempo);
+                                        return;
+                                    }
+                                }
+                            }
+
+                            console.log('Using default tempo:', originalTempo);
+                        } catch (error) {
+                            console.warn('Error extracting tempo, using default:', error);
+                        }
+                    }
+
+                    // Wait for the MIDI player to load
+                    function waitForPlayerLoad() {
+                        const checkPlayer = () => {
+                            player = findPlayer();
+                            if (player) {
+                                console.log('MIDI Player found');
+                                extractOriginalTempo();
+                                isPlayerReady = true;
+
+                                // Update slider color to indicate it's ready
+                                tempoSlider.style.accentColor = '#4CAF50';
+                                return true;
+                            }
+                            return false;
+                        };
+
+                        // Try immediately
+                        if (checkPlayer()) return;
+
+                        // Then try periodically
+                        let attempts = 0;
+                        const interval = setInterval(() => {
+                            attempts++;
+                            if (checkPlayer()) {
+                                clearInterval(interval);
+                            } else if (attempts > 100) { // Give up after 10 seconds
+                                clearInterval(interval);
+                                console.warn('Could not find MIDI player - tempo control may not work');
+                                tempoSlider.style.accentColor = '#f44336'; // Red to indicate error
+                                tempoSlider.title = 'Tempo control not available';
+                            }
+                        }, 100);
+                    }
+
+                    // Handle tempo changes
+                    tempoSlider.addEventListener('change', function() {
+                        if (!player || !isPlayerReady) {
+                            console.warn('MIDI player not ready for tempo control');
+                            return;
+                        }
+
+                        const tempoMultiplier = parseFloat(this.value) / 100;
+                        const newTempo = originalTempo * tempoMultiplier;
+
+                        console.log(`Setting tempo to ${Math.round(newTempo)} BPM (${this.value}% of ${Math.round(originalTempo)} BPM)`);
+
+                        try {
+                            if (typeof player.setTempo === 'function') {
+                                player.setTempo(newTempo);
+
+                                // Visual feedback
+                                tempoValue.style.color = '#4CAF50';
+                                setTimeout(() => {
+                                    tempoValue.style.color = '';
+                                }, 500);
+                            } else {
+                                console.warn('setTempo method not available on player');
+                                tempoValue.style.color = '#f44336';
+                                setTimeout(() => {
+                                    tempoValue.style.color = '';
+                                }, 1000);
+                            }
+                        } catch (error) {
+                            console.error('Error setting tempo:', error);
+                            tempoValue.style.color = '#f44336';
+                            setTimeout(() => {
+                                tempoValue.style.color = '';
+                            }, 1000);
+                        }
+                    });
+
+                    // Start looking for the player
+                    waitForPlayerLoad();
+
+                    // Also try when the midi-player fires events
+                    midiPlayer.addEventListener('load', () => {
+                        console.log('MIDI player loaded event');
+                        setTimeout(waitForPlayerLoad, 100);
+                    });
+
+                    // Listen for when the player actually starts to get tempo info
+                    midiPlayer.addEventListener('start', () => {
+                        console.log('MIDI player started');
+                        if (!isPlayerReady) {
+                            setTimeout(waitForPlayerLoad, 100);
+                        }
+                    });
+                });
+            </script>
             {% endif %}
             <p class="lyrics">{{ lyrics }}</p>
 

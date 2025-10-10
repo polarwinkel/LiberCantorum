@@ -6,6 +6,14 @@ Featuring mostly german songs so far and therefore assuming mostly german users 
 
 Ein Liederbuch-Generator auf Lilypond-Basis, der mit LaTex ein pdf-Liederbuch erstellt sowie eine statische web-Version samt midi-Playback als Klavierbegleitung.
 
+## Features
+
+- **PDF-Liederbuch**: Automatische Generierung mittels LaTeX aus Lilypond-Dateien
+- **Web-Version**: Statische Website mit integrierten Noten und Liedtexten
+- **MIDI-Playback**: Klavierbegleitung für alle Lieder mit html-midi-player
+- **Tempo-Anpassung**: Slider-Kontrolle (50%-200%) für MIDI-Wiedergabe. Implementiert als JavaScript-Workaround mit automatischer Original-Tempo-Erkennung und visuellem Feedback.
+- **Flexible Liedauswahl**: Unterstützung für private Lieder und eigene Zusammenstellungen
+
 ## Entwicklungsstand
 
 Aktuell ist LiberCantorum im Alpha-Stadium. Rechne mit Fehlern und Änderungen!
@@ -46,6 +54,6 @@ In LaTeX-Manier ist das pdf-Liederbuch auf großzügige, und damit übersichtlic
 - das pdf hübscher machen
 - Index der Titel und der Liedanfänge
 - ggf. (optionale) thematische Sortierung/Kapitel
-- Midi-Tempo-Anpassung, z.B. per Slider. Das wird aktuell [für die midi-Bibliothek diskutiert](https://github.com/cifkao/html-midi-player/issues/86). Falls das nicht kommt gibt es [einen Workaround für die Bibliothek](https://github.com/cifkao/html-midi-player/issues/21). Solange da das Eisen heiß ist warte ich ab.
+
 - Zusatz-Information wie Autor, Erscheinungsjahr etc. in die `lyrics.yaml` aufnehmen. (könnte man schon rein schreiben, würde aktuell ignoriert)
 - einzelnen Cantus als pdf zum Download anbieten
