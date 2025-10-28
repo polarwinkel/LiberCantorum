@@ -3,10 +3,10 @@
 import yaml, jinja2, os, sys
 from shutil import copyfile
 import subprocess
+import argparse
 
-rebuildLilypond = False # speed up, has been build manually likely; TODO: command-line option?
+rebuildLilypond = False # speed up, has been build manually likely (command-line option)
 cleanupLilySvg = True # remove leaking garbage (homedir) in svg-file
-
 
 def getCantus(folder):
     '''get the cantus-data from the yaml-file'''
@@ -105,7 +105,7 @@ def getCantiList() -> list:
                 canti.append({'folder': folder, 'file': folder})
     return canti
 
-def run():
+def renderAll():
     '''render the entire website'''
     # copy the template files:
     if not os.path.exists('out'):
@@ -119,7 +119,6 @@ def run():
         cant = getCantus(c['folder']) # TODO: error-handling
         c['title'] = cant['title']
         c['strophes'] = cant['strophes']
-        # uncomment to speed up for testing:
         sys.stdout.write('building: '+c['folder']+'...\n')
         lilyCantus(c)
         renderCantus(c)
@@ -129,4 +128,26 @@ def run():
     copyfile('book/LiberCantorum.pdf', 'out/LiberCantorum.pdf')
     sys.stdout.write('all done!\n')
 
-run()
+def main():
+    parser = argparse.ArgumentParser(
+        description='creates the static website'
+    )
+    parser.add_argument('-f', '--force_rebuild', action='store_true', help='force rebuild with lilypond')
+    parser.add_argument('-c', '--cantus_folder', help='only re-render defined cantus-folder')
+    args = parser.parse_args()
+    if args.force_rebuild:
+        global rebuildLilypond
+        rebuildLilypond = True
+    if args.cantus_folder:
+        cantus = str(args.cantus_folder)
+        c = {'folder': cantus, 'file': cantus.removeprefix('_')}
+        cant = getCantus(cantus) # TODO: error-handling
+        c['title'] = cant['title']
+        c['strophes'] = cant['strophes']
+        lilyCantus(c)
+        renderCantus(c)
+    else: 
+        renderAll()
+
+if __name__ == "__main__":
+    main()
