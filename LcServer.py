@@ -4,7 +4,7 @@
 LcServer
 '''
 
-import os
+import os, shutil
 from flask import Flask, render_template, request, send_from_directory, redirect
 import json
 import yaml
@@ -93,14 +93,15 @@ def index():
     '''show canti-list'''
     cantus = request.args.get('cantus')
     if not cantus:
-        out = '<span style="color: red;"><b>Achtung:</b> Der LcServer ist <u>nicht</u> sicher für den öffentlichen Gebrauch!</span>\n'
+        out = '<span style="color: red;"><b>Achtung:</b> Der LcServer ist <u>nicht</u> sicher für den öffentlichen Gebrauch!</span><br>\n'
+        out += '&#8594;<a href="?cantus=__new">neuen Cantus hinzufügen</a>'
         out += '<ul>\n'
-        for folder in os.listdir('scores/'):
+        for folder in sorted(os.listdir('scores/')):
             out += '<li><a href="?cantus='+folder+'">'+folder+'</a></li>\n'
         out += '</ul>\n'
     else:
         score = {'cantus': cantus, 'title': '', 'lyricsBy': '', 'musicBy': '', 'key': '', 'time': '', 'tempo': '60', 'music': '', 'verse': '', 'strophes': ''}
-        if not cantus == '_new':
+        if cantus != '__new':
             #get the cantus-data from the yaml-file:
             mus = extractScore('scores/'+cantus+'/score.ly')
             score['key'] = mus['key']
@@ -121,22 +122,24 @@ def index():
             <h1>Bearbeiten</h1>
             <h2>{cantus}</h2>
             <form action="./post" method="post">
-            <label for="cantus">Cantus:</label><input type="hidden" name="cantus" id="cantus" value="{cantus}"><br>
-            <label for="title">Titel:</label><input type="text" id="title" name="title" value="{title}"><br>
-            <label for="lyricsBy">Lyrics von:</label><input type="text" id="lyricsBy" name="lyricsBy" value="{lyricsBy}"><br>
-            <label for="musicBy">Musik von:</label><input type="text" id="musicBy" name="musicBy" value="{musicBy}"><br>
-            <label for="key">Tonart:</label><input type="text" id="key" name="key" value="{key}"><br>
-            <label for="time">Takt:</label><input type="text" id="time" name="time" value="{time}"><br>
-            <label for="tempo">Tempo:</label><input type="text" id="tempo" name="tempo" value="{tempo}"><br>
-            <h3>Music</h3>
+            <input type="hidden" id="cantus" name="cantus" value="{cantus}"><br>
+            <label for="cantusNew">Cantus:</label><input type="text" id="cantusNew" name="cantusNew" value="{cantus}">technischer Pfad: <i><b>nur</b> Buchsaben, Ziffern oder Unterstriche!</i><br>
+            <label for="title">Titel:</label><input type="text" id="title" name="title" value="{title}"><i>ausgeschriebener Titel</i><br>
+            <label for="lyricsBy">Lyrics von:</label><input type="text" id="lyricsBy" name="lyricsBy" value="{lyricsBy}"><i>(optional: ggf. mit Jahr)</i><br>
+            <label for="musicBy">Musik von:</label><input type="text" id="musicBy" name="musicBy" value="{musicBy}">(optional: ggf. mit Jahr)<br>
+            <label for="key">Tonart:</label><input type="text" id="key" name="key" value="{key}"><i>Beispiel: </i><code>c \major</code><br>
+            <label for="time">Takt:</label><input type="text" id="time" name="time" value="{time}"><i>Beispiel: </i><code>3/4</code><br>
+            <label for="tempo">Tempo:</label><input type="text" id="tempo" name="tempo" value="{tempo}"><i>für Midi-Datei; Beispiel: </i><code>60</code><br>
+            <h3>Score</h3>
             <label for="music">Noten:</label>
             <textarea id="music" name="music">{music}</textarea><br>
             <details>
                 <summary>Beispiel-Noten</summary>
                 <code><pre>
-  TODO
-  a'4 gis4 b4. gis8 a4 cis4 a4 gis4 b4. gis8 a4 cis4 \\break
-  a4 fis4 fis4 a8 fis8 e2 e8 cis'8 cis8 b8 a4 gis4 a2 \\bar "|."
+%\\alternative&#123;&#123;e8 e8&#125;&#123;e4&#125;&#125;
+\\repeat volta 2 &#123;e\'8 e8 a4 a4 | cis8 a8 e2 | e4 d4 b4 | e4 cis4 a4 &#125;\\break
+a'4 gis4 b4. gis8 a4 cis4 a4 gis4 b4. gis8 a4 cis4 \\break
+a4 fis4 fis4 a8 fis8 e2 e8 cis'8 cis8 b8 a4 gis4 a2 \\bar "|."
                 </pre></code>
             </details>
             <label for="verse">Vers:</label><br>
@@ -144,16 +147,24 @@ def index():
             <details>
                 <summary>Beispiel-Vers</summary>
                 <code><pre>
-  <<
-  TODO
-  >>
-  Kein Mensch kann sie wis -- sen, kein Jä -- ger sie -- schie -- ßen.
-  Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
+<<
+  &#123;Die Ge -- dan -- ken si -- nd frei, wer kann sie er -- ra -- ten,&#125;
+  \\new Lyrics &#123;
+    \\set associatedVoice = "melody"
+    sie - flie -- hen vor - bei, wie nächt -- lich -- e Schat -- ten.
+  &#125;
+>>
+Kein Mensch kann sie wis -- sen, kein Jä -- ger sie -- schie -- ßen.
+Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
                 </pre></code>
             </details>
             <h3>Lyrics</h3>
             <label for="strophes">Strophen:</label>
             <textarea id="strophes" name="strophes">{strophes}</textarea><br>
+            <details><summary>Löschen</summary>
+                <label for="delete" style="color:red;">löschen</label>
+                <input type="text" id="delete" name="delete"><i>eintippen: </i><code>DELETE</code><br>
+            </details>
             <input type="submit" value="Speichern" onclick="send()">
             </form>
             <hr>
@@ -163,7 +174,7 @@ def index():
 # send static files:
 @lcServer.route('/<path:filename>.html', methods=['GET'])
 def sendHtml(filename):
-    return send_from_directory('out', filename+'.html')
+    return send_from_directory('out', filename.lstrip('_')+'.html')
 @lcServer.route('/<path:filename>.svg', methods=['GET'])
 def sendSvg(filename):
     return send_from_directory('out', filename+'.svg')
@@ -181,6 +192,15 @@ def sendWoff2(filename):
 @lcServer.route('/post', methods=['POST'])
 def handle_post():
     cantus = request.form['cantus']
+    if request.form['delete'] == 'DELETE':
+        shutil.rmtree('scores/'+cantus)
+        return redirect('./')
+    if cantus == '__new':
+        os.mkdir('scores/'+request.form['cantusNew'])
+        cantus = request.form['cantusNew']
+    elif request.form['cantusNew'] != cantus:
+        os.rename('scores/'+cantus, 'scores/'+request.form['cantusNew'])
+        cantus = request.form['cantusNew']
     mus = {'key': request.form['key'],
             'time': request.form['time'],
             'tempo': request.form['tempo'],
@@ -202,7 +222,7 @@ def handle_post():
         yaml.dump(lyrics, f)
     
     os.system('python3 buildSite.py -f -c '+cantus)
-    return  redirect(cantus+'.html')
+    return redirect(cantus+'.html')
 
 # run it:
 
