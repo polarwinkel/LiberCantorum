@@ -2,6 +2,7 @@ out/
 *.midi
 *.pdf
 *.svg
+*.conf
 scores/_*/
 scores/*/
 !scores/[^_]*/

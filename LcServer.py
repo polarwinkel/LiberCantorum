@@ -17,6 +17,10 @@ import re
 
 settingsfile = 'LcServer.conf'
 
+if not os.path.exists(settingsfile):
+    with open(settingsfile, 'w') as file:
+        file.write("host: 127.0.0.1\nport: '4210'\ndebug: false")
+
 with open(settingsfile, 'r') as settingsf:
     try:
         settings = yaml.safe_load(settingsf)
@@ -102,8 +106,8 @@ def index():
             score['key'] = mus['key']
             score['time'] = mus['time']
             score['tempo'] = mus['tempo']
-            score['music'] = mus['music']
-            score['verse'] = mus['verse']
+            score['music'] = mus['music'].strip()
+            score['verse'] = mus['verse'].strip()
             with open('scores/'+cantus+'/lyrics.yaml') as f:
                 lyrics = yaml.safe_load(f)
             score['title'] = lyrics['title']
@@ -111,12 +115,12 @@ def index():
                 score['lyricsBy'] = lyrics['lyrics']
             if 'music' in lyrics.keys():
                 score['musicBy'] = lyrics['music']
-            score['strophes'] = lyrics['strophes']
+            score['strophes'] = lyrics['strophes'].strip()
         out = '''
             <a href="{cantus}.html">anzeigen</a><br>
             <h1>Bearbeiten</h1>
             <h2>{cantus}</h2>
-            <form action="/post" method="post">
+            <form action="./post" method="post">
             <label for="cantus">Cantus:</label><input type="hidden" name="cantus" id="cantus" value="{cantus}"><br>
             <label for="title">Titel:</label><input type="text" id="title" name="title" value="{title}"><br>
             <label for="lyricsBy">Lyrics von:</label><input type="text" id="lyricsBy" name="lyricsBy" value="{lyricsBy}"><br>
@@ -180,8 +184,8 @@ def handle_post():
     mus = {'key': request.form['key'],
             'time': request.form['time'],
             'tempo': request.form['tempo'],
-            'music': request.form['music'],
-            'verse': request.form['verse']}
+            'music': request.form['music'].strip(),
+            'verse': request.form['verse'].strip()}
     
     score = render_template('score.ly',
             key=mus['key'], time=mus['time'], tempo=mus['tempo'],
@@ -192,7 +196,7 @@ def handle_post():
     lyrics = {'title': request.form['title'],
             'lyrics': request.form['lyricsBy'],
             'music': request.form['lyricsBy'],
-            'strophes': LiteralScalarString(request.form['strophes'])}
+            'strophes': LiteralScalarString(request.form['strophes'].strip())}
     yaml = YAML()
     with open('scores/'+cantus+'/lyrics.yaml', 'w', encoding='utf-8') as f:
         yaml.dump(lyrics, f)

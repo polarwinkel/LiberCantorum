@@ -1,0 +1,9 @@
+python3
+python3-waitress
+python3-flask
+python3-yaml
+python3-ruamel.yaml
+python3-jinja2
+lilypond
+librsvg2-bin
+inkscape
