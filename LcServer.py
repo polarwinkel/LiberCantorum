@@ -210,6 +210,8 @@ def handle_post():
         mus['key'] = 'c \major'
     if mus['time'] == '':
         mus['time'] = '4/4'
+    if mus['tempo'] == '':
+        mus['tempo'] = '60'
     score = render_template('score.ly',
             key=mus['key'], time=mus['time'], tempo=mus['tempo'],
             music=mus['music'], verse=mus['verse'])
@@ -218,7 +220,7 @@ def handle_post():
     
     lyrics = {'title': request.form['title'],
             'lyrics': request.form['lyricsBy'],
-            'music': request.form['lyricsBy'],
+            'music': request.form['musicBy'],
             'strophes': LiteralScalarString(request.form['strophes'].strip())}
     yaml = YAML()
     with open('scores/'+cantus+'/lyrics.yaml', 'w', encoding='utf-8') as f:
