@@ -206,7 +206,10 @@ def handle_post():
             'tempo': request.form['tempo'],
             'music': request.form['music'].strip(),
             'verse': request.form['verse'].strip()}
-    
+    if mus['key'] == '':
+        mus['key'] = 'c \major'
+    if mus['time'] == '':
+        mus['time'] = '4/4'
     score = render_template('score.ly',
             key=mus['key'], time=mus['time'], tempo=mus['tempo'],
             music=mus['music'], verse=mus['verse'])
