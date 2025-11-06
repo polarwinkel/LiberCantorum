@@ -117,17 +117,55 @@ def index():
             if 'music' in lyrics.keys():
                 score['musicBy'] = lyrics['music']
             score['strophes'] = lyrics['strophes'].strip()
+            score['cd']=score['gd']=score['dm']=score['dd']=score['gm']=score['ad']=score['cm']=score['ed']=score['fm']=score['bd']=score['bm']=score['fd']=''
+            if score['key'].startswith(r'g \major'):
+                score['gd']=' selected="selected"'
+            elif score['key'].startswith(r'd \minor'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'd \major'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'g \minor'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'a \major'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'c \minor'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'e \major'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'f \minor'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'b \major'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'b \minor'):
+                score['dm']=' selected="selected"'
+            elif score['key'].startswith(r'fis \major'):
+                score['dm']=' selected="selected"'
+            else:
+                score['cd']=' selected="selected"'
         out = '''
             <a href="{cantus}.html">anzeigen</a><br>
             <h1>Bearbeiten</h1>
             <h2>{cantus}</h2>
             <form action="./post" method="post">
             <input type="hidden" id="cantus" name="cantus" value="{cantus}"><br>
-            <label for="cantusNew">Cantus:</label><input type="text" id="cantusNew" name="cantusNew" value="{cantus}">technischer Pfad: <i><b>nur</b> Buchsaben, Ziffern oder Unterstriche!</i><br>
+            <label for="cantusNew">Cantus:</label><input type="text" id="cantusNew" name="cantusNew" value="{cantus}" pattern="[a-zA-Z0-9_]+">technischer Pfad: <i><b>nur</b> Buchstaben, Ziffern oder Unterstriche!</i><br>
             <label for="title">Titel:</label><input type="text" id="title" name="title" value="{title}"><i>ausgeschriebener Titel</i><br>
-            <label for="lyricsBy">Lyrics von:</label><input type="text" id="lyricsBy" name="lyricsBy" value="{lyricsBy}"><i>(optional: ggf. mit Jahr)</i><br>
-            <label for="musicBy">Musik von:</label><input type="text" id="musicBy" name="musicBy" value="{musicBy}">(optional: ggf. mit Jahr)<br>
-            <label for="key">Tonart:</label><input type="text" id="key" name="key" value="{key}"><i>Beispiel: </i><code>c \major</code><br>
+            <label for="lyricsBy">Lyrics von:</label><input type="text" id="lyricsBy" name="lyricsBy" value="{lyricsBy}"><i>(optional; ggf. mit Jahr)</i><br>
+            <label for="musicBy">Musik von:</label><input type="text" id="musicBy" name="musicBy" value="{musicBy}"><i>(optional; ggf. mit Jahr)</i><br>
+            <label for="key">Tonart:</label><select id="key" name="key">
+                <option value="c \major"{cd}>C Dur</option>
+                <option value="g \major"{gd}>#: G Dur</option>
+                <option value="d \minor"{dm}>b: d Moll</option>
+                <option value="d \major"{dd}>##: D Dur</option>
+                <option value="g \minor">{gm}bb: g Moll</option>
+                <option value="a \major">{ad}###: A Dur</option>
+                <option value="c \minor">{cm}bbb: c Moll</option>
+                <option value="e \major">{ed}####: E Dur</option>
+                <option value="f \minor">{fm}bbbb: f Moll</option>
+                <option value="b \major">{bd}#####: B Dur ("H Dur")</option>
+                <option value="b \minor">{bm}bbbbb: b Moll</option>
+                <option value="fis \major"{fd}>######/bbbbbb: Fis Dur</option>
+            </select>
             <label for="time">Takt:</label><input type="text" id="time" name="time" value="{time}"><i>Beispiel: </i><code>3/4</code><br>
             <label for="tempo">Tempo:</label><input type="text" id="tempo" name="tempo" value="{tempo}"><i>für Midi-Datei; Beispiel: </i><code>60</code><br>
             <h3>Score</h3>
@@ -206,8 +244,6 @@ def handle_post():
             'tempo': request.form['tempo'],
             'music': request.form['music'].strip(),
             'verse': request.form['verse'].strip()}
-    if mus['key'] == '':
-        mus['key'] = 'c \major'
     if mus['time'] == '':
         mus['time'] = '4/4'
     if mus['tempo'] == '':
