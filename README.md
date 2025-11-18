@@ -13,6 +13,7 @@ Ein Liederbuch-Generator auf Lilypond-Basis, der mit LaTex ein pdf-Liederbuch er
 - **MIDI-Playback**: Klavierbegleitung für alle Lieder mit html-midi-player
 - **Tempo-Anpassung**: Slider-Kontrolle (50%-200%) für MIDI-Wiedergabe. Implementiert als JavaScript-Workaround mit automatischer Original-Tempo-Erkennung und visuellem Feedback.
 - **Flexible Liedauswahl**: Unterstützung für private Lieder und eigene Zusammenstellungen
+- **Editor-Server**: lokaler Webserver zur Lied-Bearbeitung im Browser
 
 ## Entwicklungsstand
 
@@ -48,6 +49,32 @@ Entgegen vieler Liederbücher sollen die Noten - sofern sinnvoll möglich - nich
 Gleiches gilt für die Strophen.
 
 In LaTeX-Manier ist das pdf-Liederbuch auf großzügige, und damit übersichtliche, Platznutzung angelegt. Die erzeugte LaTeX-Quelldatei kann bei Bedarf nach dem Build manuell angepasst werden.
+
+Alle Noten werden als Lilypond-code `\relative c'` verarbeitet, also relativ zur Oktave c'.
+
+## LcServer
+
+Die `LcServer.py` stellt einen Webserver zur Verfügung um die Lieder anzuzeigen oder zu editieren. Dieser ist auf Port 4210 auf dem localhost erreichbar.
+
+_Für die Einrichtung für den Zugriff von "aussen" sind erweiterte IT-Kenntnisse notwendig - nur einrichten wenn die folgenden Zeilen wirklich verstanden werden!_
+
+Soll dieser für _vertrauenswürdige, wenige Nutzer_ von aussen zugänglich gemacht werden ist z.B. ein Reverse-Proxy zu verwenden, z.B. nginx mit der config:
+
+```
+    # LiberCantorum
+    location /lc/ {
+        proxy_pass              http://127.0.0.1:4210/out/; # oeffentlicher Zugang zu den statischen Seiten
+    }
+    location /lcs/ {
+        proxy_pass              http://127.0.0.1:4210/; # geschuetzter Zugang zum LcServer
+        auth_basic              "Interner Bereich für LiberCantorum-Server!";
+        auth_basic_user_file    lc.passwd;
+    }
+```
+
+Es wird dringend empfohlen über den Reverse-Proxy sicher zu stellen, dass eine verschlüsselte Verbindung eingesetzt wird.
+
+Weiterhin ist es empfehlenswert ein WSGI-Server (wie z.B. Gunicorn oder Waitress) einzusetzen.
 
 ## Geplante Features
 

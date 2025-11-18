@@ -210,6 +210,14 @@ Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
     return render_template('template.html', title='LcServer', lyrics=out)
 
 # send static files:
+@lcServer.route('/out/', methods=['GET'])
+def sendOutIndex():
+    '''pass through static index site'''
+    return send_from_directory('out', 'index.html')
+@lcServer.route('/out/<filename>', methods=['GET'])
+def sendOut(filename):
+    '''pass through static site'''
+    return send_from_directory('out', filename)
 @lcServer.route('/<path:filename>.html', methods=['GET'])
 def sendHtml(filename):
     return send_from_directory('out', filename.lstrip('_')+'.html')
