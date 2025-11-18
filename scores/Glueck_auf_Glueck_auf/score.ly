@@ -8,19 +8,19 @@ myStaffSize = #20
 }
 #(set-global-staff-size 25)
 
-musicOne = \relative {
-  \key g \major % Tonart
+musicOne = \fixed c' {
+  \key g \major
   \time 4/4
-  g'2 fis4 a4 g2 r2 b2 a4 c4 b2 r4 \break
-  g8 a8 b4 b4 b4 a8 b8 c4 a8. a16 a4 \break
-  a8 b8 c4 e4 e4 d8 c8 d4 b8. b16 b4 \break
-  a4 g2 a2 b4 e4 d4 c4 b2 a2 g2 %"|."
+  g2 fis4 a4 g2 r2 b2 a4 c'4 b2 r4 \break
+g8 a8 b4 b4 b4 a8 b8 c'4 a8. a16 a4 \break
+a8 b8 c'4 e'4 e'4 d'8 c'8 d'4 b8. b16 b4 \break
+a4 g2 a2 b4 e'4 d'4 c'4 b2 a2 g2 \bar "|."
 }
 verseOne = \lyricmode {
   Glück auf, Glück auf! Der Stei -- ger kommt
-  und er hat sein hel -- les _ Licht bei der Nacht,
-  und er hat sein hel -- les _ Licht bei der Nacht
-  schon an -- ge -- zü - nd, schon an -- ge -- zündt.
+und er hat sein hel -- les _ Licht bei der Nacht,
+und er hat sein hel -- les _ Licht bei der Nacht
+schon an -- ge -- zü - nd, schon an -- ge -- zündt.
 }
 
 \score {
@@ -55,6 +55,6 @@ verseOne = \lyricmode {
     }
   >>
   \midi {
-    \tempo 2 = 68
+    \tempo 2 = 64
   }
 }

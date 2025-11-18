@@ -8,19 +8,20 @@ myStaffSize = #20
 }
 #(set-global-staff-size 25)
 
-musicOne = \relative f' {
-  \key f \major
+musicOne = \fixed c' {
+  \key d \minor
+  \time 4/4
   \repeat volta 2 { f8 f8 g8 a4 a8 g8 a4 a8 g8 a4 a8 \break
-    g8 a4 bes4 c4 d8 c8 c4. bes8 a2 } \break
-  c2 c4. c8 s2 d4. 8 bes8 a8 bes8 d8 c2r8.  a4. c8 g2 \break
-  a4. c8 g2 a4. bes8 c4 d8 c8 c4. bes8 a2. \bar "|."
+  g8 a4 bes4 c'4 d'8 c'8 c'4. bes8 a2 } \break
+c'4. c'8 d'4. c'8 bes8 a8 bes8 d'8 c'2 r8. \break
+a4. c'8 g2 a4. c'8 g2 a4. bes8 c'4 d'8 c'8 c'4. bes8 a2. \bar "|."
 }
 verseOne = \lyricmode {
   Es ist für uns ei -- ne Zeit an -- ge -- kom -- men
-  die bringt uns ei -- ne _ gro -- ße Freud
-  Ü -- ber's Schnee be -- glä _ -- nzte  _ _ Feld
-  wan -- dern wir, wan -- dern wir
-  durch die wei -- te, _ wei -- ße Welt
+die bringt uns ei -- ne _ gro -- ße Freud
+Ü -- ber's Schnee be -- glä _ -- nzte _ Feld
+wan -- dern wir, wan -- dern wir
+durch die wei -- te, _ wei -- ße Welt
 }
 
 \score {
@@ -55,6 +56,6 @@ verseOne = \lyricmode {
     }
   >>
   \midi {
-    \tempo 2 = 68
+    \tempo 2 = 60
   }
 }

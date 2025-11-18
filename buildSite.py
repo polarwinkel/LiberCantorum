@@ -92,7 +92,7 @@ def getCantiList() -> list:
                 file = f.removeprefix('_')
                 canti.append({'folder': f, 'file': file})
     else:
-        for folder in os.listdir('scores/'):
+        for folder in sorted(os.listdir('scores/')):
             # first get private canti with _-prefix (prio 1, ignored in git):
             if folder.startswith('_'):
                 canti.append({'folder': folder, 'file': folder.removeprefix('_')})

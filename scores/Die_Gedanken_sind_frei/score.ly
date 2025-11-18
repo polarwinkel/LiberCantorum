@@ -26,8 +26,6 @@ verseOne = \lyricmode {
 >>
 Kein Mensch kann sie wis -- sen, kein Jä -- ger sie -- schie -- ßen.
   Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
-
-
 }
 
 \score {

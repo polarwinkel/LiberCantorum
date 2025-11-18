@@ -8,7 +8,7 @@ myStaffSize = #20
 }
 #(set-global-staff-size 25)
 
-musicOne = \relative {
+musicOne = \fixed c' {
   \key {{ key|safe }}
   \time {{ time|safe }}
   {{ music|safe }}

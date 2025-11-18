@@ -9,22 +9,14 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \fixed c' {
-  \key c \major
+  \key d \minor
   \time 4/4
-  a8 a8 a8 e4 g8 fis4 d8 e4 \break
-e8 g4 g8 a8 g8 a8 b8 b8 r8 r4 r8 \break
-a8 a8 a8 e4 g8 fis4 d8 e4 \break
-a,16 b,16 c4 c8 d4 c8 b,8 a,4 r4 \break
-e8 a4 a8 b4 b8 c'4 c'8 f4 r8 \break
-a8 a8 a8 g4 a8 g8 f4 f4 \bar "|."
+  f4 c' c' bes bes a2 g4 c' c' f bes a g2 r4 \break
+g4 bes bes a a d'2 c'4 bes a a g g f2 r4
 }
 verseOne = \lyricmode {
-  Wild heult der Wolf des Nachts im Wald
-vor Hun -- ger kann er nicht schla -- fen
-Und sei -- ne Höhl' ist bit -- ter kalt
-er _ giert nach fet -- ten Scha -- fen.
-Du Wolf, du Wolf, komm nicht hier -- her,
-Mein Kind be -- kommst du nie mehr. _
+  Wer hat die schön -- sten Schäf -- chen? Die hat der gol -- d'ne Mond,
+der hin -- ter un -- ser'n Bäu -- men am Him -- mel dro -- ben wohnt.
 }
 
 \score {
