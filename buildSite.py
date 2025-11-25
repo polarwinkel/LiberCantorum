@@ -51,7 +51,8 @@ def renderIndex(canti):
         out += '</li>\n'
     out += '</ul>\n'
     out += '<br>\n'
-    out += '<a href="LiberCantorum.pdf">Download pdf</a>\n'
+    out += '<a href="LiberCantorum.pdf">Download pdf</a><br>\n'
+    out += '<a href="LiberCantorum-book.pdf">Download booklet</a>\n'
     with open('template/template.html', 'r') as f:
         tpl = f.read()
     template = jinja2.Template(tpl)
@@ -81,6 +82,9 @@ def renderBook(canti):
     p = subprocess.Popen(['pdflatex', '-interaction', 'batchmode', 'LiberCantorum.tex'],
             cwd='book/', stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait()
+    p = subprocess.Popen(['pdfbook2', 'LiberCantorum.pdf'], cwd='book/', 
+            stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    p.wait
 
 def getCantiList() -> list:
     '''read canti from canti.yaml or, if not exists, from scores-folder'''

@@ -7,3 +7,4 @@ python3-jinja2
 lilypond
 librsvg2-bin
 inkscape
+pdfbook2

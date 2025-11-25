@@ -203,6 +203,10 @@ Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
                 <label for="delete" style="color:red;">löschen</label>
                 <input type="text" id="delete" name="delete"><i>eintippen: </i><code>DELETE</code><br>
             </details>
+            <label for="rebuild">Alles neu bauen:</label>
+            <input type="checkbox" id="rebuild" name="rebuild" value="rebuild" onload="this.checked=false;">
+            Das dauert ggf. lange (mehrere Minuten)!
+            <script>document.getElementById("rebuild").checked = false;</script><br><br>
             <input type="submit" value="Speichern" onclick="send()">
             </form>
             <hr>
@@ -270,7 +274,10 @@ def handle_post():
     with open('scores/'+cantus+'/lyrics.yaml', 'w', encoding='utf-8') as f:
         yaml.dump(lyrics, f)
     
-    os.system('python3 buildSite.py -f -c '+cantus)
+    if request.form.get('rebuild'):
+        os.system('python3 buildSite.py -f')
+    else:
+        os.system('python3 buildSite.py -f -c '+cantus)
     return redirect(cantus+'.html')
 
 # run it:
