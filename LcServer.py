@@ -237,6 +237,9 @@ def sendCss(filename):
 @lcServer.route('/<path:filename>.woff2', methods=['GET'])
 def sendWoff2(filename):
     return send_from_directory('template', filename+'.woff2')
+@lcServer.route('/<path:filename>.pdf', methods=['GET'])
+def sendPdf(filename):
+    return send_from_directory('book', filename+'.pdf')
 
 # handle post:
 @lcServer.route('/post', methods=['POST'])
