@@ -8,7 +8,7 @@ myStaffSize = #20
 }
 #(set-global-staff-size 25)
 
-musicOne = \relative {
+musicOne = \fixed c' {
   \key g \major
   \time 4/4
   \repeat volta 2 { d'8. d16 g8 fis8 e8 fis8 g8 d8 a'8. a16 a8 g8 fis8 e8 d4 } \break

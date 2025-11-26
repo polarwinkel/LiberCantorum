@@ -82,7 +82,7 @@ def renderBook(canti):
     p = subprocess.Popen(['pdflatex', '-interaction', 'batchmode', 'LiberCantorum.tex'],
             cwd='book/', stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait()
-    p = subprocess.Popen(['pdfbook2', 'LiberCantorum.pdf'], cwd='book/', 
+    p = subprocess.Popen(['pdfbook2', 'a4paper', '-n', 'LiberCantorum.pdf'], cwd='book/', 
             stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait
 

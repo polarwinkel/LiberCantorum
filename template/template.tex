@@ -1,16 +1,37 @@
-\documentclass[a5paper,11pt]{book}
+\documentclass[a5paper,11pt]{article}
 \usepackage[a5paper, margin=2cm]{geometry}
 \usepackage{graphicx}
+\usepackage{tocloft}
+\setlength{\cftbeforesecskip}{0.2em}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\usepackage{titletoc}
+\setcounter{secnumdepth}{0}
+\usepackage[colorlinks=true,linkcolor=black]{hyperref}
+
 \begin{document}
 
 \begin{titlepage}
     \begin{center}
-        \Huge{LiberCantorum}
+        ~\\
+        \vspace{2cm}
+        \Huge{Liederheft}\\
+        \vspace{8cm}
+        \tiny erstellt:\\
+        \vspace{0.3cm}
+        \normalsize \today\\
+        \vspace{0.5cm}
+        \tiny durch\\
+        \vspace{0.5cm}
+        \Large{LiberCantorum}\\
+        \vspace{0.5cm}
+        \tiny{}
     \end{center}
 \end{titlepage}
 
-\setcounter{secnumdepth}{-1}
+\renewcommand\contentsname{Lieder}
 \tableofcontents
+\newpage
 
 {{ contents }}
 

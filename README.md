@@ -78,9 +78,10 @@ Weiterhin ist es empfehlenswert ein WSGI-Server (wie z.B. Gunicorn oder Waitress
 
 ## Geplante Features
 
-- das pdf hübscher machen
+- ~das pdf hübscher machen~
 - Index der Titel und der Liedanfänge
 - ggf. (optionale) thematische Sortierung/Kapitel
 
-- Zusatz-Information wie Autor, Erscheinungsjahr etc. in die `lyrics.yaml` aufnehmen. (könnte man schon rein schreiben, würde aktuell ignoriert)
+- in progress: Zusatz-Information wie Autor, Erscheinungsjahr etc. in die `lyrics.yaml` aufnehmen. (könnte man schon rein schreiben, würde aktuell ignoriert)
+
 - einzelnen Cantus als pdf zum Download anbieten
