@@ -11,11 +11,14 @@ myStaffSize = #20
 musicOne = \fixed c' {
   \key g \major
   \time 4/4
-  \repeat volta 2 { d'8. d16 g8 fis8 e8 fis8 g8 d8 a'8. a16 a8 g8 fis8 e8 d4 } \break
-\repeat volta 2 { b'8. b16 b8 b8 b8 d,8 d8 r8 b'8. a16 g8 a8 b4 g4 } \break
-g4. g8 fis4 e4 fis2 b,2 e2 d4 c4 b4 e4 d4 r4 \break
-b'4. b8 c4 b4 e,4 b'4 a4 d,8 e8 fis8 g4 d8 e8 fis8 g4 \break
-d8 e8 fis8 g4 fis16 fis8. fis4 g4 \bar "|."
+  \repeat volta 2 { d8. d16 g8 fis8 e8 fis8 g8 d8 a8. a16 a8 g8 fis8 e8 d4 } \break
+\repeat volta 2 { b8. b16 b8 b8 b8 d8 d8 r8 b8. a16 g8 a8 b4 g4 } \break
+g4. g8 fis4 e4 fis2 b,2 e2 d4 c4 b,4 e4 d4 r4 \break
+b4. b8 c'4 b4 e4 b4 a4 d8 e8 fis8 g4 d8 e8 fis8 g4 \break
+d8 e8 fis8 g4 fis8 fis4. fis4 g4 \bar "|."
+}
+chordsOne = \chordmode {
+  
 }
 verseOne = \lyricmode {
   <<
@@ -41,9 +44,7 @@ schned -- de -- räng -- täng te -- täng täng -- täng
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -59,9 +60,7 @@ schned -- de -- räng -- täng te -- täng täng -- täng
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -69,6 +68,6 @@ schned -- de -- räng -- täng te -- täng täng -- täng
     }
   >>
   \midi {
-    \tempo 2 = 68
+    \tempo 2 = 64
   }
 }

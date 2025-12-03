@@ -6,7 +6,7 @@ import subprocess
 import argparse
 
 rebuildLilypond = False # speed up, has been build manually likely (command-line option)
-cleanupLilySvg = True # remove leaking garbage (homedir) in svg-file
+cleanupLilySvg = True # adapt font and remove leaking garbage (homedir) in svg-file
 
 def getCantus(folder):
     '''get the cantus-data from the yaml-file'''
@@ -20,6 +20,10 @@ def lilyCantus(cantus):
         p = subprocess.Popen(['lilypond', '--svg', '-s', 'score.ly'], cwd='scores/'+cantus['folder'])
         p.wait()
     if cleanupLilySvg:
+        # fix font:
+        p  = subprocess.Popen(['sed', '-i', 's/serif/Latin Modern Roman/g', 'score.svg'], 
+                cwd='scores/'+cantus['folder'])
+        p.wait()
         # get rid of leaking garbage (homedir) in the Lilypond-created svg-file:
         p  = subprocess.Popen(['sed', '-E', '-i', 's/xlink:href="textedit:[^"]*"//g', 'score.svg'], 
                 cwd='scores/'+cantus['folder'])

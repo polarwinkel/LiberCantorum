@@ -10,8 +10,12 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key {{ key|safe }}
+  {% if tempo.startswith('"') %}\tempo {{ tempo|safe }}{% endif %}
   \time {{ time|safe }}
   {{ music|safe }}
+}
+chordsOne = \chordmode {
+  {{ chords|safe }}
 }
 verseOne = \lyricmode {
   {{ verse|safe }}
@@ -19,11 +23,12 @@ verseOne = \lyricmode {
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -39,9 +44,7 @@ verseOne = \lyricmode {
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -49,6 +52,6 @@ verseOne = \lyricmode {
     }
   >>
   \midi {
-    \tempo 2 = {{ tempo }}
+    \tempo {{ tempo|safe }}
   }
 }

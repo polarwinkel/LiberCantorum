@@ -35,7 +35,7 @@ with open(settingsfile, 'r') as settingsf:
 
 def extractScore(path):
     text = open(path, 'r', encoding='utf-8').read()
-    # Suche "musicOne =" gefolgt von optionalem Space und evtl. Token (z.B. "\relative c")
+    # Suche "musicOne =" gefolgt von optionalem Space und evtl. Token (z.B. "\fixed c'")
     # dann die öffnende "{" und extrahiere den Inhalt bis zur passenden schließenden "}" (verschachtelt unterstützt)
     m = re.search(r'musicOne\s*=\s*(?:[^\{]*\{)', text)
     start = m.end() - 1  # Position der ersten "{"
@@ -50,15 +50,39 @@ def extractScore(path):
             depth -= 1
             if depth == 0:
                 # Inhalt zwischen erster "{" und zugehöriger "}" (ohne äußere Klammern)
+                # (\key, \tempo und \time entfernen)
                 s = text[start+1:i]
                 m = re.search(r'^[ \t]*\\key.*$', s, flags=re.MULTILINE)
                 key = m.group(0).strip().removeprefix(r'\key').strip() if m else ''
                 s = re.sub(r'^[ \t]*\\key.*\n?', '', s, count=1, flags=re.MULTILINE)
+                m = re.search(r'^[ \t]*\\tempo.*$', s, flags=re.MULTILINE)
+                time = m.group(0).strip().removeprefix(r'\tempo').strip() if m else ''
+                s = re.sub(r'^[ \t]*\\tempo.*\n?', '', s, count=1, flags=re.MULTILINE)
                 m = re.search(r'^[ \t]*\\time.*$', s, flags=re.MULTILINE)
                 time = m.group(0).strip().removeprefix(r'\time').strip() if m else ''
                 music = re.sub(r'^[ \t]*\\time.*\n?', '', s, count=1, flags=re.MULTILINE)
                 break
         i += 1
+    # suche chords:
+    m = re.search(r'chordsOne\s*=\s*(?:[^\{]*\{)', text)
+    if not m:
+        chords = ''
+    else:
+        start = m.end() - 1
+        depth = 0
+        i = start
+        n = len(text)
+        while i < n:
+            ch = text[i]
+            if ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 0:
+                    chords = text[start+1:i]
+                    break
+            i += 1
+    # suche lyrics:
     m = re.search(r'verseOne\s*=\s*(?:[^\{]*\{)', text)
     if not m:
         verse = ''
@@ -77,9 +101,9 @@ def extractScore(path):
                     verse = text[start+1:i]
                     break
             i += 1
-    m = re.search(r'^[ \t]*\\tempo 2 =.*$', text, flags=re.MULTILINE)
-    tempo = m.group(0).strip().removeprefix(r'\tempo 2 =').strip() if m else ''
-    return {'key': key, 'time': time, 'music': music, 'verse': verse, 'tempo': tempo}
+    m = re.search(r'^[ \t]*\\tempo .*$', text, flags=re.MULTILINE)
+    tempo = m.group(0).strip().removeprefix(r'\tempo ').strip() if m else ''
+    return {'key': key, 'time': time, 'music': music, 'chords': chords, 'verse': verse, 'tempo': tempo}
 
 # WebServer stuff:
 
@@ -100,7 +124,7 @@ def index():
             out += '<li><a href="?cantus='+folder+'">'+folder+'</a></li>\n'
         out += '</ul>\n'
     else:
-        score = {'cantus': cantus, 'title': '', 'lyricsBy': '', 'musicBy': '', 'key': '', 'time': '', 'tempo': '60', 'music': '', 'verse': '', 'strophes': ''}
+        score = {'cantus': cantus, 'title': '', 'lyricsBy': '', 'musicBy': '', 'key': '', 'time': '', 'tempo': '2=60', 'music': '', 'chords': '', 'verse': '', 'strophes': ''}
         if cantus != '__new':
             #get the cantus-data from the yaml-file:
             mus = extractScore('scores/'+cantus+'/score.ly')
@@ -108,6 +132,7 @@ def index():
             score['time'] = mus['time']
             score['tempo'] = mus['tempo']
             score['music'] = mus['music'].strip()
+            score['chords'] = mus['chords'].strip()
             score['verse'] = mus['verse'].strip()
             with open('scores/'+cantus+'/lyrics.yaml') as f:
                 lyrics = yaml.safe_load(f)
@@ -123,23 +148,23 @@ def index():
             elif score['key'].startswith(r'd \minor'):
                 score['dm']=' selected="selected"'
             elif score['key'].startswith(r'd \major'):
-                score['dm']=' selected="selected"'
+                score['dd']=' selected="selected"'
             elif score['key'].startswith(r'g \minor'):
-                score['dm']=' selected="selected"'
+                score['gm']=' selected="selected"'
             elif score['key'].startswith(r'a \major'):
-                score['dm']=' selected="selected"'
+                score['ad']=' selected="selected"'
             elif score['key'].startswith(r'c \minor'):
-                score['dm']=' selected="selected"'
+                score['cm']=' selected="selected"'
             elif score['key'].startswith(r'e \major'):
-                score['dm']=' selected="selected"'
+                score['ed']=' selected="selected"'
             elif score['key'].startswith(r'f \minor'):
-                score['dm']=' selected="selected"'
+                score['fm']=' selected="selected"'
             elif score['key'].startswith(r'b \major'):
-                score['dm']=' selected="selected"'
+                score['bd']=' selected="selected"'
             elif score['key'].startswith(r'b \minor'):
-                score['dm']=' selected="selected"'
+                score['bm']=' selected="selected"'
             elif score['key'].startswith(r'fis \major'):
-                score['dm']=' selected="selected"'
+                score['fd']=' selected="selected"'
             else:
                 score['cd']=' selected="selected"'
         out = '''
@@ -157,17 +182,17 @@ def index():
                 <option value="g \major"{gd}>#: G Dur</option>
                 <option value="d \minor"{dm}>b: d Moll</option>
                 <option value="d \major"{dd}>##: D Dur</option>
-                <option value="g \minor">{gm}bb: g Moll</option>
-                <option value="a \major">{ad}###: A Dur</option>
-                <option value="c \minor">{cm}bbb: c Moll</option>
-                <option value="e \major">{ed}####: E Dur</option>
-                <option value="f \minor">{fm}bbbb: f Moll</option>
-                <option value="b \major">{bd}#####: B Dur ("H Dur")</option>
-                <option value="b \minor">{bm}bbbbb: b Moll</option>
+                <option value="g \minor"{gm}>bb: g Moll</option>
+                <option value="a \major"{ad}>###: A Dur</option>
+                <option value="c \minor"{cm}>bbb: c Moll</option>
+                <option value="e \major"{ed}>####: E Dur</option>
+                <option value="f \minor"{fm}>bbbb: f Moll</option>
+                <option value="b \major"{bd}>#####: B Dur ("H Dur")</option>
+                <option value="b \minor"{bm}>bbbbb: b Moll</option>
                 <option value="fis \major"{fd}>######/bbbbbb: Fis Dur</option>
-            </select>
+            </select><br>
+            <label for="tempo">Tempo:</label><input type="text" id="tempo" name="tempo" value='{tempo}'><i>Beispiel: </i><code>2=60</code> oder <code>"mäßig" 2=60</code><br>
             <label for="time">Takt:</label><input type="text" id="time" name="time" value="{time}"><i>Beispiel: </i><code>3/4</code><br>
-            <label for="tempo">Tempo:</label><input type="text" id="tempo" name="tempo" value="{tempo}"><i>für Midi-Datei; Beispiel: </i><code>60</code><br>
             <h3>Score</h3>
             <label for="music">Noten:</label>
             <textarea id="music" name="music">{music}</textarea><br>
@@ -178,6 +203,14 @@ def index():
 \\repeat volta 2 &#123;e\'8 e8 a4 a4 | cis8 a8 e2 | e4 d4 b4 | e4 cis4 a4 &#125;\\break
 a'4 gis4 b4. gis8 a4 cis4 a4 gis4 b4. gis8 a4 cis4 \\break
 a4 fis4 fis4 a8 fis8 e2 e8 cis'8 cis8 b8 a4 gis4 a2 \\bar "|."
+                </pre></code>
+            </details>
+            <label for="chords">Akkordsymbole:</label><br>
+            <textarea id="chords" name="chords">{chords}</textarea><br>
+            <details>
+                <summary>Beispiel-Akkorde</summary>
+                <code><pre>
+a4 a1. e2.:7 a2. e2. a2. e2.:7 a2 a4:7 d2. a2. a2 e4:7 a2
                 </pre></code>
             </details>
             <label for="verse">Vers:</label><br>
@@ -258,14 +291,15 @@ def handle_post():
             'time': request.form['time'],
             'tempo': request.form['tempo'],
             'music': request.form['music'].strip(),
+            'chords': request.form['chords'].strip(),
             'verse': request.form['verse'].strip()}
     if mus['time'] == '':
         mus['time'] = '4/4'
     if mus['tempo'] == '':
-        mus['tempo'] = '60'
+        mus['tempo'] = '2=60'
     score = render_template('score.ly',
             key=mus['key'], time=mus['time'], tempo=mus['tempo'],
-            music=mus['music'], verse=mus['verse'])
+            music=mus['music'], chords=mus['chords'], verse=mus['verse'])
     with open('scores/'+cantus+'/score.ly', 'w') as scfile:
         scfile.write(score)
     
