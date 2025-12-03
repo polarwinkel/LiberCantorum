@@ -13,7 +13,7 @@ musicOne = \fixed c' {
   
   \time 4/4
   d4. a,8 d4 fis4 fis4. fis8 e4 d4 cis8 d8 e8 fis8 g4 fis4 d4 a,4 a2 \break
-d4. a,8 d4 fis4 fis4. e8 e4 d4 b8 b8 d'8 e8 fis4 g4 a4 a4 d'2 \break
+d4. a,8 d4 fis4 fis4. e8 e4 d4 b,8 cis8 d8 e8 fis4 g4 a4 a4 d'2 \break
 fis4. fis8 b8 fis8 d8 b,8 fis2 r2 fis4. fis8 b8 fis8 d8 b,8 fis2 r2 \break
 d4 d4 g4 g4 e4 e4 a2 d'4. a8 fis4 d4 fis8 e8 e8 d8 d2 \bar "|."
 }
@@ -58,6 +58,6 @@ Wie kam ge -- stern ich ins Nest? Bin scheint's wie -- der voll _ ge _ -- west!
     }
   >>
   \midi {
-    \tempo 2 = 68
+    \tempo 2=68
   }
 }

@@ -10,11 +10,15 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key c \major
+  
   \time 6/8
   g4 g8 g8. f16 e8 a4 a8 a4. a4 a8 c'8. b16 a8 a4 g8 g4. \break
 g4 d8 d8 g8 b8 a4. g4. \break
 f4 f8 f8. e16 d8 e4 g8 c'4. f4 f8 f8. e16 d8 e4 g8 c'4. \break
 c'4 b8 d'8. c'16 a8 a4. g4. g4 g8 g8 a8 b8 d'4. c'4. \bar "|."
+}
+chordsOne = \chordmode {
+  
 }
 verseOne = \lyricmode {
   Kei -- nen Trop -- fen im Be -- cher mehr und der Beu _ -- tel schlaff und leer,
@@ -25,11 +29,12 @@ Lin -- den -- wir -- tin, du jun -- ge, Lin -- den -- wir -- tin, du jun -- ge!
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -45,9 +50,7 @@ Lin -- den -- wir -- tin, du jun -- ge, Lin -- den -- wir -- tin, du jun -- ge!
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -55,6 +58,6 @@ Lin -- den -- wir -- tin, du jun -- ge, Lin -- den -- wir -- tin, du jun -- ge!
     }
   >>
   \midi {
-    \tempo 2 = 68
+    \tempo 2=68
   }
 }

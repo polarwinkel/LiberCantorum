@@ -10,9 +10,13 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key d \minor
+  
   \time 4/4
   f4 c' c' bes bes a2 g4 c' c' f bes a g2 r4 \break
 g4 bes bes a a d'2 c'4 bes a a g g f2 r4
+}
+chordsOne = \chordmode {
+  
 }
 verseOne = \lyricmode {
   Wer hat die schön -- sten Schäf -- chen? Die hat der gol -- d'ne Mond,
@@ -21,11 +25,12 @@ der hin -- ter un -- ser'n Bäu -- men am Him -- mel dro -- ben wohnt.
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -41,9 +46,7 @@ der hin -- ter un -- ser'n Bäu -- men am Him -- mel dro -- ben wohnt.
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -51,6 +54,6 @@ der hin -- ter un -- ser'n Bäu -- men am Him -- mel dro -- ben wohnt.
     }
   >>
   \midi {
-    \tempo 2 = 60
+    \tempo 2=60
   }
 }
