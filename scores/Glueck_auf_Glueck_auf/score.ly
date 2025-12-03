@@ -10,11 +10,15 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key g \major
+  
   \time 4/4
   g2 fis4 a4 g2 r2 b2 a4 c'4 b2 r4 \break
 g8 a8 b4 b4 b4 a8 b8 c'4 a8. a16 a4 \break
 a8 b8 c'4 e'4 e'4 d'8 c'8 d'4 b8. b16 b4 \break
 a4 g2 a2 b4 e'4 d'4 c'4 b2 a2 g2 \bar "|."
+}
+chordsOne = \chordmode {
+  
 }
 verseOne = \lyricmode {
   Glück auf, Glück auf! Der Stei -- ger kommt
@@ -25,11 +29,12 @@ schon an -- ge -- zü - nd, schon an -- ge -- zündt.
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -45,9 +50,7 @@ schon an -- ge -- zü - nd, schon an -- ge -- zündt.
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -55,6 +58,6 @@ schon an -- ge -- zü - nd, schon an -- ge -- zündt.
     }
   >>
   \midi {
-    \tempo 2 = 64
+    \tempo 2=64
   }
 }

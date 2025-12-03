@@ -10,6 +10,7 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key g \major
+  
   \time 4/4
   \repeat volta 2 { d8. d16 g8 fis8 e8 fis8 g8 d8 a8. a16 a8 g8 fis8 e8 d4 } \break
 \repeat volta 2 { b8. b16 b8 b8 b8 d8 d8 r8 b8. a16 g8 a8 b4 g4 } \break
@@ -42,6 +43,9 @@ schned -- de -- räng -- täng te -- täng täng -- täng
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
         \musicOne
@@ -68,6 +72,6 @@ schned -- de -- räng -- täng te -- täng täng -- täng
     }
   >>
   \midi {
-    \tempo 2 = 64
+    \tempo 2=64
   }
 }

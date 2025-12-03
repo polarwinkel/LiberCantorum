@@ -17,7 +17,7 @@ Ein Liederbuch-Generator auf Lilypond-Basis, der mit LaTex ein pdf-Liederbuch er
 
 ## Entwicklungsstand
 
-Aktuell ist LiberCantorum im Alpha-Stadium. Rechne mit Fehlern und Änderungen!
+Aktuell ist LiberCantorum im Alpha-Stadium. Rechne mit Fehlern und ggf. zentralen Änderungen!
 
 ## Bedienung
 
@@ -43,14 +43,14 @@ Eine eigene Zusammenstellung von Canti ist durch Erstellen einer Datei `canti.ya
 _(bei nicht-Zustimmung gerne eine Issue erstellen um es zu diskutieren)_
 
 Die Lilypond-Dateien sollen auf einen Druck auf Din-A5-Format ausgelegt sein, wobei diese auch in schwachem Licht auch von älteren Menschen lesbar sein sollen.
-Dadurch ist auch ein Druck in kleiner auf ansonsten üblicher Liederbuch-Größe gewährleistet.
 
 Entgegen vieler Liederbücher sollen die Noten - sofern sinnvoll möglich - nicht zufällig umbrechen, sondern an geeigneten Stellen, um die Orientierung zu verbessern - auf Kosten von etwas Platz.
 Gleiches gilt für die Strophen.
 
-In LaTeX-Manier ist das pdf-Liederbuch auf großzügige, und damit übersichtliche, Platznutzung angelegt. Die erzeugte LaTeX-Quelldatei kann bei Bedarf nach dem Build manuell angepasst werden.
+Das automatisch erstellte pdf-Liederbuch ist direkt druckreif. Die erzeugte LaTeX-Quelldatei können aber bei Bedarf nach dem Build manuell angepasst werden, sie bleiben gespeichert.
 
 Alle Noten werden als Lilypond-code `\relative c'` verarbeitet, also relativ zur Oktave c'.
+Die Lilypond-Dateien müssen die Struktur von der Daten `template/score.ly` haben um mit dem LcServer bearbeitet werden zu können.
 
 ## LcServer
 
@@ -58,7 +58,7 @@ Die `LcServer.py` stellt einen Webserver zur Verfügung um die Lieder anzuzeigen
 
 _Für die Einrichtung für den Zugriff von "aussen" sind erweiterte IT-Kenntnisse notwendig - nur einrichten wenn die folgenden Zeilen wirklich verstanden werden!_
 
-Soll dieser für _vertrauenswürdige, wenige Nutzer_ von aussen zugänglich gemacht werden ist z.B. ein Reverse-Proxy zu verwenden, z.B. nginx mit der config:
+Soll dieser für _vertrauenswürdige, wenige Nutzer_ von aussen zugänglich gemacht werden ist ein Reverse-Proxy zu verwenden, z.B. nginx mit der config:
 
 ```
     # LiberCantorum
@@ -72,7 +72,7 @@ Soll dieser für _vertrauenswürdige, wenige Nutzer_ von aussen zugänglich gema
     }
 ```
 
-Es wird dringend empfohlen über den Reverse-Proxy sicher zu stellen, dass eine verschlüsselte Verbindung eingesetzt wird.
+Es wird dringend empfohlen über den Reverse-Proxy sicher zu stellen, dass eine verschlüsselte Verbindung eingesetzt wird und ein Zugriff nur nach Anmeldung möglich ist.
 
 Weiterhin ist es empfehlenswert ein WSGI-Server (wie z.B. Gunicorn oder Waitress) einzusetzen.
 

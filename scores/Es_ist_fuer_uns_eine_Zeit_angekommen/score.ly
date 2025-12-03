@@ -10,11 +10,15 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key d \minor
+  
   \time 4/4
   \repeat volta 2 { f8 f8 g8 a4 a8 g8 a4 a8 g8 a4 a8 \break
   g8 a4 bes4 c'4 d'8 c'8 c'4. bes8 a2 } \break
 c'4. c'8 d'4. c'8 bes8 a8 bes8 d'8 c'2 r8. \break
 a4. c'8 g2 a4. c'8 g2 a4. bes8 c'4 d'8 c'8 c'4. bes8 a2. \bar "|."
+}
+chordsOne = \chordmode {
+  
 }
 verseOne = \lyricmode {
   Es ist für uns ei -- ne Zeit an -- ge -- kom -- men
@@ -26,11 +30,12 @@ durch die wei -- te, _ wei -- ße Welt
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -46,9 +51,7 @@ durch die wei -- te, _ wei -- ße Welt
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -56,6 +59,6 @@ durch die wei -- te, _ wei -- ße Welt
     }
   >>
   \midi {
-    \tempo 2 = 60
+    \tempo 2=60
   }
 }

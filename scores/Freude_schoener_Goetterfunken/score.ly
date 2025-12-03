@@ -10,11 +10,15 @@ myStaffSize = #20
 
 musicOne = \fixed c' {
   \key c \major
+  
   \time 4/4
   e4 e4 f4 g4 g4 f4 e4 d4 | c4 c4 d4 e4 e4. d8 d4 r4 \break
 e4 e4 f4 g4 g4 f4 e4 d4 | c4 c4 d4 e4 d4. c8 c4 r4 \break
 d4 d4 e4 c4 d4 e8 f8 e4 c4 | d4 e8 f8 e4 d4 | c4 d4 g,4 e2 \break
 e4 f4 g4 g4 f4 e4 d4 c4 c4 d4 e4 d4. c8 c4 \bar "|."
+}
+chordsOne = \chordmode {
+  
 }
 verseOne = \lyricmode {
   Freu -- de schö -- ner Göt -- ter -- fun -- ken Toch -- ter aus E -- ly -- si -- um,
@@ -25,11 +29,12 @@ Al -- le Men -- schen wer -- den Brü -- der wo dein sanf -- ter Flü -- gel wei
 
 \score {
   <<
+    \new ChordNames {
+      \chordsOne
+    }
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -45,9 +50,7 @@ Al -- le Men -- schen wer -- den Brü -- der wo dein sanf -- ter Flü -- gel wei
   <<
     \new Staff {
       \new Voice = "melody" {
-        \relative {
-          \musicOne
-        }
+        \musicOne
       }
     }
     \new Lyrics \lyricsto "melody" {
@@ -55,6 +58,6 @@ Al -- le Men -- schen wer -- den Brü -- der wo dein sanf -- ter Flü -- gel wei
     }
   >>
   \midi {
-    \tempo 2 = 64
+    \tempo 2=64
   }
 }

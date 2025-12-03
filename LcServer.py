@@ -117,7 +117,7 @@ def index():
     '''show canti-list'''
     cantus = request.args.get('cantus')
     if not cantus:
-        out = '<span style="color: red;"><b>Achtung:</b> Der LcServer ist <u>nicht</u> sicher für den öffentlichen Gebrauch!</span><br>\n'
+        out = '<span style="color: orange;"><b>Hinweis:</b> Der LcServer ist nur für den Gebrauch von wenigen, autentifizierten Nutzern ausgelegt!</span><br>\n'
         out += '&#8594;<a href="?cantus=__new">neuen Cantus hinzufügen</a>'
         out += '<ul>\n'
         for folder in sorted(os.listdir('scores/')):
@@ -125,6 +125,7 @@ def index():
         out += '</ul>\n'
     else:
         score = {'cantus': cantus, 'title': '', 'lyricsBy': '', 'musicBy': '', 'key': '', 'time': '', 'tempo': '2=60', 'music': '', 'chords': '', 'verse': '', 'strophes': ''}
+        score['cd']=score['gd']=score['dm']=score['dd']=score['gm']=score['ad']=score['cm']=score['ed']=score['fm']=score['bd']=score['bm']=score['fd']=''
         if cantus != '__new':
             #get the cantus-data from the yaml-file:
             mus = extractScore('scores/'+cantus+'/score.ly')
@@ -142,7 +143,6 @@ def index():
             if 'music' in lyrics.keys():
                 score['musicBy'] = lyrics['music']
             score['strophes'] = lyrics['strophes'].strip()
-            score['cd']=score['gd']=score['dm']=score['dd']=score['gm']=score['ad']=score['cm']=score['ed']=score['fm']=score['bd']=score['bm']=score['fd']=''
             if score['key'].startswith(r'g \major'):
                 score['gd']=' selected="selected"'
             elif score['key'].startswith(r'd \minor'):
@@ -194,6 +194,10 @@ def index():
             <label for="tempo">Tempo:</label><input type="text" id="tempo" name="tempo" value='{tempo}'><i>Beispiel: </i><code>2=60</code> oder <code>"mäßig" 2=60</code><br>
             <label for="time">Takt:</label><input type="text" id="time" name="time" value="{time}"><i>Beispiel: </i><code>3/4</code><br>
             <h3>Score</h3>
+            <details>
+                <summary>Noten einblenden:</summary>
+                <img class="svg" src="{cantus}.svg" alt="gespeicherte Noten">
+            </details>
             <label for="music">Noten:</label>
             <textarea id="music" name="music">{music}</textarea><br>
             <details>
@@ -206,7 +210,7 @@ a4 fis4 fis4 a8 fis8 e2 e8 cis'8 cis8 b8 a4 gis4 a2 \\bar "|."
                 </pre></code>
             </details>
             <label for="chords">Akkordsymbole:</label><br>
-            <textarea id="chords" name="chords">{chords}</textarea><br>
+            <textarea id="chords" name="chords" style="height:70px;">{chords}</textarea><br>
             <details>
                 <summary>Beispiel-Akkorde</summary>
                 <code><pre>
@@ -231,15 +235,15 @@ Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
             </details>
             <h3>Lyrics</h3>
             <label for="strophes">Strophen:</label>
-            <textarea id="strophes" name="strophes">{strophes}</textarea><br>
-            <details><summary>Löschen</summary>
+            <textarea id="strophes" name="strophes" style="height:400px;">{strophes}</textarea><br>
+            <details><summary>Spezielle Optionen:</summary>
                 <label for="delete" style="color:red;">löschen</label>
                 <input type="text" id="delete" name="delete"><i>eintippen: </i><code>DELETE</code><br>
+                <label for="rebuild">Buch neu bauen:</label>
+                <input type="checkbox" id="rebuild" name="rebuild" value="rebuild" onload="this.checked=false;">
+                (dauert länger...)
+                <script>document.getElementById("rebuild").checked = false;</script><br><br>
             </details>
-            <label for="rebuild">Buch neu bauen:</label>
-            <input type="checkbox" id="rebuild" name="rebuild" value="rebuild" onload="this.checked=false;">
-            (dauert länger...)
-            <script>document.getElementById("rebuild").checked = false;</script><br><br>
             <input type="submit" value="speichern und bauen" onclick="send()">
             </form>
             <hr>

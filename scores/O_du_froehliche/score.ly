@@ -9,20 +9,22 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \fixed c' {
-  \key d \minor
+  \key c \major
   
-  \time 3/4
-  c8 f8 d8 c8. a,16 c8 c8 f8 d8 c8. a,16 c8 f8 e8 d8 c4. \break
-d8 cis8 d8 e8. a,16 a,8 f8 e8 f8 g8. c16 c8 \break
-\repeat volta 2 {a8 g8 f8 d8. f16 bes8 a8 bes8 g8 \alternative{{c'4.}{f4}}} r8 \bar "|."
+  \time 4/4
+  g2 a2 g4. f8 e4 f4 g2 a2 g4. f8 e4 f4 \break
+g2 g2 a2 b4 c'4 b2 a2 g1 \break
+d4. e8 d4 e4 f4. g8 f2 e4. f8 e4 f4 g4. a8 g2 \break
+c'4 b4 a4 g4 c'4 a4 g4 f4 e2 d2 c1
 }
 chordsOne = \chordmode {
   
 }
 verseOne = \lyricmode {
-  Was die Welt mor -- gen bringt, ob sie mir Sor -- gen bringt, Leid o -- der Freud?
-Kom -- me, was kom -- men mag. Son -- nen -- schein, Wet -- ter -- schlag,
-mor -- gen ist auch ein Tag, heu -- te ist \alternative{{heut!}{heut.}}
+  O du fröh -- lich --e, _ O du se -- li -- ge, _
+gna -- den -- brin -- gen -- de Weih -- nachts -- zeit!
+We -- lt ging ver -- lo - ren, Chri -- st ward ge -- bo - ren:
+Fre - ue, _ freu -- e dich, O Chris -- ten -- heit!
 }
 
 \score {
@@ -56,6 +58,6 @@ mor -- gen ist auch ein Tag, heu -- te ist \alternative{{heut!}{heut.}}
     }
   >>
   \midi {
-    \tempo 2=44
+    \tempo 2=70
   }
 }
