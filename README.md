@@ -23,13 +23,17 @@ Aktuell ist LiberCantorum im Alpha-Stadium. Rechne mit Fehlern und ggf. zentrale
 
 LiberCantorum ist aktuell auf die Ausführung auf Linux-Systemen ausgelegt.
 
-Nach dem Klonen des Repositories sind die Pakete aus der `dependencies.txt` noch zu installieren (angegeben sind die Paketnamen unter Debian 13 (trixie)). [TODO: Die Liste ist aktuell noch nicht vollständig]
+Nach dem Klonen des Repositories sind die Pakete aus der `requirements.txt` noch zu installieren (angegeben sind die Paketnamen unter Debian 13 (trixie)).
+Mit z.B. `python3 buildSite.py` wird das Liederbuch anhand der Ordner in `scores` erstellt. Der LcServer kann mit `python3 LcServer.py` gestartet werden und ist dann unter `localhost:4210` im Browser erreichbar.
+
+Alternativ kann durch Ausführen der `install.sh` (als Root) der LcServer als Systemdienst installiert werden. Dieser läuft dann unter dem user `lc` in dessen Homeverzeichnis dann auch die Daten liegen.
 
 Die Lieder (im Code `canti`) liegen als Lilypond-Datei `score.ly` in Ordnern im `scores`-Verzeichnis. Es wird empfohlen die Struktur von `Die_Gedanken_sind_frei` für eigene Lieder zu übernehmen.
 
 Dazu ist eine `lyrics.yaml`-Datei nötig, die den `title` und die `strophes: |+` (vorformattiert mit Zeilenumbrüchen, daher das `|+`) enthält; vergleiche `/scores/Die_Gedanken_sind_frei/`
 
-Werden eigene Lieder hinzugefügt kann der Ordnername mit einem `_` begonnen werden. Dann werden diese in git ignoriert und sind "private". Ebenso können vorhandene Canti für den privaten Gebrauch angepasst werden indem der Cantus-Ordner kopiert wird mit `_`-präfix, dieser wird beim Build bevorzugt.
+Werden eigene Lieder hinzugefügt kann der Ordnername mit einem `_` begonnen werden. Dann werden diese in git ignoriert und sind "private". Diese werden nur mit der Kommandozeilenoption `-a` mit aufgenommen.
+Ebenso können vorhandene Canti für den privaten Gebrauch angepasst werden indem der Cantus-Ordner kopiert wird mit `_`-präfix, dieser wird beim Build bevorzugt wenn die Option `-a` angegeben ist.
 
 Eine eigene Zusammenstellung von Canti ist durch Erstellen einer Datei `canti.yaml` möglich, in der die gewünschten Ordnernamen in der gewünschten Reihenfolge als `- `-Liste angegeben werden, z.B.:
 
