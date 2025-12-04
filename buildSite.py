@@ -90,21 +90,33 @@ def renderBook(canti):
             stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait
 
-def getCantiList(private) -> list:
+def getCantiList(selection) -> list:
     '''read canti from canti.yaml or, if not exists, from scores-folder'''
     canti = []
-    if os.path.isfile('canti.yaml'):
+    if selection=='private':
+        for folder in sorted(os.listdir('scores/')):
+            # first get private canti with _-prefix (prio 1, ignored in git):
+            if folder.startswith('_'):
+                canti.append({'folder': folder, 'file': folder.removeprefix('_')})
+        for folder in sorted(os.listdir('scores/')):
+            # add canti not found in private ones:
+            if not folder.startswith('_'):
+                for c in canti:
+                    if folder == c['file']: # skip private ones with same name
+                        continue
+                canti.append({'folder': folder, 'file': folder})
         with open('canti.yaml', 'r') as f:
             folders = yaml.safe_load(f)
             for f in folders:
                 file = f.removeprefix('_')
                 canti.append({'folder': f, 'file': file})
+    if selection!='public' and os.path.isfile(selection):
+        with open(selection, 'r') as f:
+            folders = yaml.safe_load(f)
+            for f in folders:
+                file = f.removeprefix('_')
+                canti.append({'folder': f, 'file': file})
     else:
-        if private:
-            for folder in sorted(os.listdir('scores/')):
-                # first get private canti with _-prefix (prio 1, ignored in git):
-                if folder.startswith('_'):
-                    canti.append({'folder': folder, 'file': folder.removeprefix('_')})
         for folder in sorted(os.listdir('scores/')):
             # add canti not found in private ones:
             if not folder.startswith('_'):
@@ -114,7 +126,7 @@ def getCantiList(private) -> list:
                 canti.append({'folder': folder, 'file': folder})
     return canti
 
-def renderAll(private):
+def renderAll(selection):
     '''render the entire website'''
     # copy the template files:
     if not os.path.exists('out'):
@@ -122,7 +134,7 @@ def renderAll(private):
     for fi in os.listdir('template/'):
         if fi != 'template.html' and fi != 'template.tex':
             copyfile('template/'+fi, 'out/'+fi)
-    canti = getCantiList(private)
+    canti = getCantiList(selection)
     # create pages and copy stuff:
     for c in canti:
         cant = getCantus(c['folder']) # TODO: error-handling
@@ -143,7 +155,7 @@ def main():
     )
     parser.add_argument('-f', '--force_rebuild', action='store_true', help='force rebuild with lilypond')
     parser.add_argument('-c', '--cantus_folder', help='only re-render defined cantus-folder')
-    parser.add_argument('-a', '--all', action='store_true', help='include private canti in index as well')
+    parser.add_argument('-s', '--selection', help='selection of canti to build the site and book; _public_, private or <yaml-file>')
     args = parser.parse_args()
     if args.force_rebuild:
         global rebuildLilypond
@@ -158,9 +170,15 @@ def main():
         renderCantus(c)
     else:
         private = False
-        if args.all:
-            private = True
-        renderAll(private)
+        if not args.selection or args.selection=='public':
+            selection = 'public'
+        elif args.selection=='private':
+            selection = 'private'
+        elif os.path.isfile(args.selection):
+            selection = args.selection
+        else:
+            sys.exit('file not found')
+        renderAll(selection)
 
 if __name__ == "__main__":
     main()

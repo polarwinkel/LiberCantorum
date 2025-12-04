@@ -319,26 +319,49 @@ def handle_post():
 @lcServer.route('/build', methods=['GET'])
 def build():
     '''show canti-list'''
-    cantus = request.args.get('cantus')
-    if not cantus:
-        out = '<h2>Liederbuch neu bauen</h2>\n'
-        out += '<p>Je nach Server und Liederanzahl dauert das eine Weile!</p>\n'
-        out += '<form action="./build" method="post">'
-        out += '<label for="private">auch private:</label>'
-        out += '<input type="checkbox" id="private" name="private" value="private"><br>'
-        out += '<input type="submit" value="bauen" onclick="send()">'
-        out += '</form>'
-        out += '<hr>\n'
-        out += '<p>Private Canti beginnen mit einem <code>_</code> und werden nur <i>verlinkt</i> wenn oben ausgewählt.</p>'
-        out += '<ul>\n'
-        for folder in sorted(os.listdir('scores/')):
-            out += '<li><a href="?cantus='+folder+'">'+folder+'</a></li>\n'
-        out += '</ul>\n'
+    canti = []
+    if os.path.isfile('canti.yaml'):
+        with open('canti.yaml', 'r') as f:
+            canti = yaml.safe_load(f)
+    folders = sorted(os.listdir('scores/'))
+    out = '<h2>Liederbuch neu bauen</h2>\n'
+    out += '<p>Je nach Server und Liederanzahl dauert das eine Weile!</p>\n'
+    out += '<form action="./build" method="post">\n'
+    out += '<label for="option">Welche Lieder sollen verwendet werden?</label><br style="clear:both;">\n'
+    out += '<input type="radio" name="options" id="public" value="public">Alle ohne Private<br>'
+    out += '<input type="radio" name="options" id="all "value="all">Alle mit Privaten<br>'
+    out += '<input type="radio" name="options" id="list" value="list">Entsprechend der Canti-Liste<br>'
+    out += '<label for="canti">Canti-Liste:</label><br>\n'
+    out += '<textarea id="canti" name="canti" style="max-width:400px; height:500px;">'
+    for cantus in canti:
+        out += '- '+cantus+'\n'
+    out += '</textarea>\n'
+    out += '<textarea id="all" name="all" style="max-width:400px; height:500px; color:#888;" disabled>'
+    out += '(Liste aller Canti: Copy-and-Paste!\n'
+    for folder in folders:
+        out += '- '+folder+'\n'
+    out += '</textarea><br style="clear:both;">\n'
+    out += '<input type="submit" value="bauen" onclick="send()">'
+    out += '<p><i>(Ggf. muss das pdf zweimal gebaut werden bis das Inhaltsverzeichnis stimmt!)</i></p>\n'
+    out += '</form>'
+    out += '<hr>\n'
+    out += '<p>Private Canti beginnen mit einem <code>_</code> und werden nur <i>verlinkt</i> wenn oben ausgewählt.</p>\n'
+    out += '<ul>\n'
+    for folder in folders:
+        out += '<li><a href="?cantus='+folder+'">'+folder+'</a></li>\n'
+    out += '</ul>\n'
     return render_template('template.html', title='LcServer', lyrics=out)
 @lcServer.route('/build', methods=['POST'])
 def build_post():
-    if request.form.get('private'):
-        os.system('python3 buildSite.py -a')
+    opt = request.form.get('options')
+    print(opt)
+    if opt == 'private':
+        os.system('python3 buildSite.py -s private')
+    elif opt == 'list':
+        canti = request.form.get('canti')
+        with open("canti.yaml", "w") as f:
+            f.write(canti)
+        os.system('python3 buildSite.py -s canti.yaml')
     else:
         os.system('python3 buildSite.py')
     return redirect('index.html')

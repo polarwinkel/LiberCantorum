@@ -10,7 +10,10 @@ scores/*/
 !scores/[^_]*/*.yaml
 book/
 *.bak
-canti.yaml
+/*.yaml
+!.*/**/*.yaml
+/*.yml
+!.*/**/*.yml
 /import
 *.capx
 __pycache__/

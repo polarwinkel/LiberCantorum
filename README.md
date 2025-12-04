@@ -28,12 +28,12 @@ Mit z.B. `python3 buildSite.py` wird das Liederbuch anhand der Ordner in `scores
 
 Alternativ kann durch Ausführen der `install.sh` (als Root) der LcServer als Systemdienst installiert werden. Dieser läuft dann unter dem user `lc` in dessen Homeverzeichnis dann auch die Daten liegen.
 
-Die Lieder (im Code `canti`) liegen als Lilypond-Datei `score.ly` in Ordnern im `scores`-Verzeichnis. Es wird empfohlen die Struktur von `Die_Gedanken_sind_frei` für eigene Lieder zu übernehmen.
+Die Lieder (im Code `canti`) liegen als Lilypond-Datei `score.ly` in Ordnern im `scores`-Verzeichnis. Die Struktur muss der von von `template/score.ly` entsprechen damit auch der LcServer diese weiter verarbeiten kann.
 
 Dazu ist eine `lyrics.yaml`-Datei nötig, die den `title` und die `strophes: |+` (vorformattiert mit Zeilenumbrüchen, daher das `|+`) enthält; vergleiche `/scores/Die_Gedanken_sind_frei/`
 
-Werden eigene Lieder hinzugefügt kann der Ordnername mit einem `_` begonnen werden. Dann werden diese in git ignoriert und sind "private". Diese werden nur mit der Kommandozeilenoption `-a` mit aufgenommen.
-Ebenso können vorhandene Canti für den privaten Gebrauch angepasst werden indem der Cantus-Ordner kopiert wird mit `_`-präfix, dieser wird beim Build bevorzugt wenn die Option `-a` angegeben ist.
+Werden eigene Lieder hinzugefügt kann der Ordnername mit einem `_` begonnen werden. Dann werden diese in git ignoriert und sind "private". Diese werden nur mit der Kommandozeilenoption `-s private` mit aufgenommen.
+Ebenso können vorhandene Canti für den privaten Gebrauch angepasst werden indem der Cantus-Ordner kopiert wird mit `_`-präfix, dieser wird beim Build bevorzugt wenn die Option `-s private` angegeben ist.
 
 Eine eigene Zusammenstellung von Canti ist durch Erstellen einer Datei `canti.yaml` möglich, in der die gewünschten Ordnernamen in der gewünschten Reihenfolge als `- `-Liste angegeben werden, z.B.:
 
@@ -41,6 +41,8 @@ Eine eigene Zusammenstellung von Canti ist durch Erstellen einer Datei `canti.ya
 - Die_Gedanken_sind_frei
 - _Als_die_Roemer_frech_geworden
 ```
+
+Dann kann das Liederbuch mit `python3 buildSite.py -s canti.yaml` gebaut werden.
  
 ## Konvention
 
