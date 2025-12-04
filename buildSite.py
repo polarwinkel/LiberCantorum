@@ -90,7 +90,7 @@ def renderBook(canti):
             stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait
 
-def getCantiList() -> list:
+def getCantiList(private) -> list:
     '''read canti from canti.yaml or, if not exists, from scores-folder'''
     canti = []
     if os.path.isfile('canti.yaml'):
@@ -100,20 +100,21 @@ def getCantiList() -> list:
                 file = f.removeprefix('_')
                 canti.append({'folder': f, 'file': file})
     else:
+        if private:
+            for folder in sorted(os.listdir('scores/')):
+                # first get private canti with _-prefix (prio 1, ignored in git):
+                if folder.startswith('_'):
+                    canti.append({'folder': folder, 'file': folder.removeprefix('_')})
         for folder in sorted(os.listdir('scores/')):
-            # first get private canti with _-prefix (prio 1, ignored in git):
-            if folder.startswith('_'):
-                canti.append({'folder': folder, 'file': folder.removeprefix('_')})
-        for folder in os.listdir('scores/'):
             # add canti not found in private ones:
             if not folder.startswith('_'):
                 for c in canti:
-                    if folder == c['file']:
+                    if folder == c['file']: # skip private ones with same name
                         continue
                 canti.append({'folder': folder, 'file': folder})
     return canti
 
-def renderAll():
+def renderAll(private):
     '''render the entire website'''
     # copy the template files:
     if not os.path.exists('out'):
@@ -121,7 +122,7 @@ def renderAll():
     for fi in os.listdir('template/'):
         if fi != 'template.html' and fi != 'template.tex':
             copyfile('template/'+fi, 'out/'+fi)
-    canti = getCantiList()
+    canti = getCantiList(private)
     # create pages and copy stuff:
     for c in canti:
         cant = getCantus(c['folder']) # TODO: error-handling
@@ -142,6 +143,7 @@ def main():
     )
     parser.add_argument('-f', '--force_rebuild', action='store_true', help='force rebuild with lilypond')
     parser.add_argument('-c', '--cantus_folder', help='only re-render defined cantus-folder')
+    parser.add_argument('-a', '--all', action='store_true', help='include private canti in index as well')
     args = parser.parse_args()
     if args.force_rebuild:
         global rebuildLilypond
@@ -154,8 +156,11 @@ def main():
         c['strophes'] = cant['strophes']
         lilyCantus(c)
         renderCantus(c)
-    else: 
-        renderAll()
+    else:
+        private = False
+        if args.all:
+            private = True
+        renderAll(private)
 
 if __name__ == "__main__":
     main()

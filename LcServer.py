@@ -117,8 +117,9 @@ def index():
     '''show canti-list'''
     cantus = request.args.get('cantus')
     if not cantus:
-        out = '<span style="color: orange;"><b>Hinweis:</b> Der LcServer ist nur für den Gebrauch von wenigen, autentifizierten Nutzern ausgelegt!</span><br>\n'
-        out += '&#8594;<a href="?cantus=__new">neuen Cantus hinzufügen</a>'
+        out = '<span style="color: orange;"><i>Hinweis:</i> Der LcServer ist nur für den Gebrauch durch wenige, vertrauenswürdige Nutzer ausgelegt.</span><br>\n'
+        out += '&#8594;<a href="?cantus=__new">neuen Cantus hinzufügen</a><br>\n'
+        out += '&#8594;<a href="build">Liederbuch bauen</a><br>\n'
         out += '<ul>\n'
         for folder in sorted(os.listdir('scores/')):
             out += '<li><a href="?cantus='+folder+'">'+folder+'</a></li>\n'
@@ -236,13 +237,9 @@ Es blei -- bet da - bei: Die Ge -- da -- n -- ken sind frei.
             <h3>Lyrics</h3>
             <label for="strophes">Strophen:</label>
             <textarea id="strophes" name="strophes" style="height:400px;">{strophes}</textarea><br>
-            <details><summary>Spezielle Optionen:</summary>
+            <details><summary>Löschen:</summary>
                 <label for="delete" style="color:red;">löschen</label>
                 <input type="text" id="delete" name="delete"><i>eintippen: </i><code>DELETE</code><br>
-                <label for="rebuild">Buch neu bauen:</label>
-                <input type="checkbox" id="rebuild" name="rebuild" value="rebuild" onload="this.checked=false;">
-                (dauert länger...)
-                <script>document.getElementById("rebuild").checked = false;</script><br><br>
             </details>
             <input type="submit" value="speichern und bauen" onclick="send()">
             </form>
@@ -316,9 +313,35 @@ def handle_post():
         yaml.dump(lyrics, f)
     
     os.system('python3 buildSite.py -f -c '+cantus)
-    if request.form.get('rebuild'):
-        os.system('python3 buildSite.py')
     return redirect(cantus+'.html')
+
+# build book:
+@lcServer.route('/build', methods=['GET'])
+def build():
+    '''show canti-list'''
+    cantus = request.args.get('cantus')
+    if not cantus:
+        out = '<h2>Liederbuch neu bauen</h2>\n'
+        out += '<p>Je nach Server und Liederanzahl dauert das eine Weile!</p>\n'
+        out += '<form action="./build" method="post">'
+        out += '<label for="private">auch private:</label>'
+        out += '<input type="checkbox" id="private" name="private" value="private"><br>'
+        out += '<input type="submit" value="bauen" onclick="send()">'
+        out += '</form>'
+        out += '<hr>\n'
+        out += '<p>Private Canti beginnen mit einem <code>_</code> und werden nur <i>verlinkt</i> wenn oben ausgewählt.</p>'
+        out += '<ul>\n'
+        for folder in sorted(os.listdir('scores/')):
+            out += '<li><a href="?cantus='+folder+'">'+folder+'</a></li>\n'
+        out += '</ul>\n'
+    return render_template('template.html', title='LcServer', lyrics=out)
+@lcServer.route('/build', methods=['POST'])
+def build_post():
+    if request.form.get('private'):
+        os.system('python3 buildSite.py -a')
+    else:
+        os.system('python3 buildSite.py')
+    return redirect('index.html')
 
 # run it:
 
