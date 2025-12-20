@@ -86,6 +86,10 @@ def renderBook(canti):
     p = subprocess.Popen(['pdflatex', '-interaction', 'batchmode', 'LiberCantorum.tex'],
             cwd='book/', stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait()
+    # twice to get the TOC right (hopefully):
+    p = subprocess.Popen(['pdflatex', '-interaction', 'batchmode', 'LiberCantorum.tex'],
+            cwd='book/', stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    p.wait()
     p = subprocess.Popen(['pdfbook2', 'a4paper', '-n', 'LiberCantorum.pdf'], cwd='book/', 
             stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     p.wait
@@ -94,23 +98,24 @@ def getCantiList(selection) -> list:
     '''read canti from canti.yaml or, if not exists, from scores-folder'''
     canti = []
     if selection=='private':
-        for folder in sorted(os.listdir('scores/')):
+        for folder in os.listdir('scores/'):
             # first get private canti with _-prefix (prio 1, ignored in git):
             if folder.startswith('_'):
                 canti.append({'folder': folder, 'file': folder.removeprefix('_')})
-        for folder in sorted(os.listdir('scores/')):
+        for folder in os.listdir('scores/'):
             # add canti not found in private ones:
             if not folder.startswith('_'):
+                exists = False
                 for c in canti:
                     if folder == c['file']: # skip private ones with same name
+                        exists = True
                         continue
-                canti.append({'folder': folder, 'file': folder})
-        with open('canti.yaml', 'r') as f:
-            folders = yaml.safe_load(f)
-            for f in folders:
-                file = f.removeprefix('_')
-                canti.append({'folder': f, 'file': file})
-    if selection!='public' and os.path.isfile(selection):
+                if not exists:
+                    canti.append({'folder': folder, 'file': folder})
+        def getFilen(e):
+            return e['file']
+        canti.sort(key=getFilen)
+    elif selection!='public' and os.path.isfile(selection):
         with open(selection, 'r') as f:
             folders = yaml.safe_load(f)
             for f in folders:
@@ -118,7 +123,7 @@ def getCantiList(selection) -> list:
                 canti.append({'folder': f, 'file': file})
     else:
         for folder in sorted(os.listdir('scores/')):
-            # add canti not found in private ones:
+            # add non-private canti:
             if not folder.startswith('_'):
                 for c in canti:
                     if folder == c['file']: # skip private ones with same name

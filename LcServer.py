@@ -329,7 +329,7 @@ def build():
     out += '<form action="./build" method="post">\n'
     out += '<label for="option">Welche Lieder sollen verwendet werden?</label><br style="clear:both;">\n'
     out += '<input type="radio" name="options" id="public" value="public">Alle ohne Private<br>'
-    out += '<input type="radio" name="options" id="all "value="all">Alle mit Privaten<br>'
+    out += '<input type="radio" name="options" id="all "value="private">Alle mit Privaten<br>'
     out += '<input type="radio" name="options" id="list" value="list">Entsprechend der Canti-Liste<br>'
     out += '<label for="canti">Canti-Liste:</label><br>\n'
     out += '<textarea id="canti" name="canti" style="max-width:400px; height:500px;">'
