@@ -16,7 +16,7 @@ musicOne = \fixed c' {
                   d8 fis4 e8 fis8 g4 fis8 e8 d4 cis4 d4 r8 }\break
 \repeat volta 2 { d8 a4 a8 g8 fis4 fis8 e8 d4 d8 c8 b,4 r8 } \break
 d8 d4 e8 fis8 g4 fis8 g8 a4 g8 a8 b4 r4 \break
-b8 b4 a8 b8 c'4 b8 a8 g4 a4 b4 r8 b8 b4 a8 b8 d'8 c'8 b8 a8 g2 fis2 g2 \bar "|."
+b8 b4 a8 b8 c'4 b8 a8 g4 a4 b4 r8 b8 b4 a8 b8 d'8 c'8 b8 a8 d'2 fis2 g2 \bar "|."
 }
 chordsOne = \chordmode {
   

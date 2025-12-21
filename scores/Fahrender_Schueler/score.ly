@@ -12,12 +12,12 @@ musicOne = \fixed c' {
   \key d \minor
   
   \time 4/4
-  a,8 d4. e4 e8 d4. a,4 a,8 c4. bes,4 bes,8 a,4. r4 \break
-a,8 d4. d4 e8 f4. f4 g8 a2. r8 \break
-f4  g8 a4. g4 a8 d'4. c'4 a8 c'4. \break
-bes4 bes8 a4. r8 a8 a4. a4 f8 f4. e4 f8 g2. \break
-g8 a4. g4 a8 d'4. c'4 a8 c'4. bes4 bes8 a4. \break
-r8  a8 a4. f4 e8 d4. cis4 cis8 d2. \bar "|."
+  a,8 f4 e8. e16 d4 a,8 a,8 c4 bes,8. bes,16 a,4. \break
+a,8 d4 d8 e8 f4 f8 g8 a2. \break
+f8 g8 a4 a8. a16 d'4 c'8 a8 c'4 bes8. bes16 a4. \break
+a8 a4 f8. f16 f4 e8 f8 g2. \break
+f8 g8 a4 a8. a16 d'4 c'8 a8 c'4 bes8. bes16 a4. \break
+a8 a4 f8. f16 f4 e8 e8 d2. \bar "|."
 }
 chordsOne = \chordmode {
   
@@ -62,6 +62,6 @@ es tau -- meln die Wel -- len ins Meer.
     }
   >>
   \midi {
-    \tempo 2=60
+    \tempo 2=54
   }
 }

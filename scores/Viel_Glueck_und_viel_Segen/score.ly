@@ -9,23 +9,18 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \fixed c' {
-  \key d \minor
+  \key c \major
   
   \time 4/4
-  \repeat volta 2 {c4 f4. c8 a,4 f4 g4. a8 f4 f4 e4 d4 c4 b,4 d4 c4 r4 \break}
-c4 g4. e8 f4. d8 c4. bes,8 a,4 c4 g4. e8 f4 d4 c4. bes8 a4 \break
-c4 a4 a4 a4 a4 bes4 d'4 d'4 d'4 c'4. a8 c'4. bes8 bes2 a4 \break
-f8. d16 c4 c'8. c'16 c'4 e8. d16 c4 c'8. c'16 c'4 a4 a4 f4 a4. g8 g2 f4 \bar "|."
+  g4 c'4 b4 a8 b8 c'4 g4 g4 a4 g4 f4 e4 g4 \break
+e4 f4 g4 a4 g4 e4 g4 f8 e8 d4 d4 c2
 }
 chordsOne = \chordmode {
   
 }
 verseOne = \lyricmode {
-  Wohl -- auf, die Luft geht frisch und rein, wer lan -- ge sitzt, muss ro -- sten!
-Drum reich mir Stab und Or -- dens -- kleid der fah -- ren -- den Scho -- la _ -- ren,
-ich will zur schö -- nen Som -- mer -- zeit ins Land der Fran -- ken fah -- ren.
-Val -- le -- ri, val -- le -- ra, val -- le -- ri, val -- le -- ra,
-ins Land der Fran -- ken fah -- ren.
+  Viel Glück und vi -- el Se -- gen auf all dei -- nen We -- gen,
+Ge -- sund -- heit und Froh -- sinn sei au -- ch mit da -- bei.
 }
 
 \score {
@@ -59,6 +54,6 @@ ins Land der Fran -- ken fah -- ren.
     }
   >>
   \midi {
-    \tempo 2=68
+    \tempo 2=60
   }
 }

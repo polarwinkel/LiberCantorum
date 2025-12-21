@@ -9,23 +9,20 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \fixed c' {
-  \key d \minor
+  \key g \major
   
   \time 4/4
-  \repeat volta 2 {c4 f4. c8 a,4 f4 g4. a8 f4 f4 e4 d4 c4 b,4 d4 c4 r4 \break}
-c4 g4. e8 f4. d8 c4. bes,8 a,4 c4 g4. e8 f4 d4 c4. bes8 a4 \break
-c4 a4 a4 a4 a4 bes4 d'4 d'4 d'4 c'4. a8 c'4. bes8 bes2 a4 \break
-f8. d16 c4 c'8. c'16 c'4 e8. d16 c4 c'8. c'16 c'4 a4 a4 f4 a4. g8 g2 f4 \bar "|."
+  d8 d4 g8 a8 b4 a8 g8 a4 g8 fis8 g4 d8 d8 e4 g8 e8 d4 d4 c4 d8 c8 b,4 r8 \break
+d8 d4 g8 a8 b4 a8 g8 a4 g8 fis8 g4 d8 d8 e4 g8 e8 d4 d8 d8 d4 g8 fis8 g4 r8 \break
+\repeat volta 2 {d2 g2 b2 g4 d8 d8 g8 d8 g8 a8 b4 c'4 b4 a8 g8 a4 fis4 g2 r2} \bar "|."
 }
 chordsOne = \chordmode {
   
 }
 verseOne = \lyricmode {
-  Wohl -- auf, die Luft geht frisch und rein, wer lan -- ge sitzt, muss ro -- sten!
-Drum reich mir Stab und Or -- dens -- kleid der fah -- ren -- den Scho -- la _ -- ren,
-ich will zur schö -- nen Som -- mer -- zeit ins Land der Fran -- ken fah -- ren.
-Val -- le -- ri, val -- le -- ra, val -- le -- ri, val -- le -- ra,
-ins Land der Fran -- ken fah -- ren.
+  Wir lie -- ben die Stür -- me, die brau -- sen -- den Wo -- gen, der eis -- kal -- ten Win -- de rau -- es Ge -- sicht.
+Wir sind schon der Mee -- re so vie -- le ge -- zo -- gen, und den -- no -- ch sank uns -- 're Fah -- -- ne _ nicht.
+Hei -- jo, hei -- jo, hei -- jo hei -- jo hei -- jo -- ho, hei -- jo, hei -- jo -- ho, hei -- jo!
 }
 
 \score {
@@ -59,6 +56,6 @@ ins Land der Fran -- ken fah -- ren.
     }
   >>
   \midi {
-    \tempo 2=68
+    \tempo 2=60
   }
 }
