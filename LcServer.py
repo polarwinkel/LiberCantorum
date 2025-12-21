@@ -41,14 +41,14 @@ def extractScore(path):
     start = m.end() - 1  # Position der ersten "{"
     depth = 0
     i = start
-    n = len(text)
+    n = re.search(r'chordsOne\s*=\s*(?:[^\{]*\{)', text).start()-1 # nach musicOne kommt chordsOne (> fehlertolerant bei fehlenden Klammern)
     while i < n:
         ch = text[i]
         if ch == '{':
             depth += 1
         elif ch == '}':
             depth -= 1
-            if depth == 0:
+            if depth == 0 or i==n-1:
                 # Inhalt zwischen erster "{" und zugehöriger "}" (ohne äußere Klammern)
                 # (\key, \tempo und \time entfernen)
                 s = text[start+1:i]
@@ -71,14 +71,14 @@ def extractScore(path):
         start = m.end() - 1
         depth = 0
         i = start
-        n = len(text)
+        n = re.search(r'verseOne\s*=\s*(?:[^\{]*\{)', text).start()-1
         while i < n:
             ch = text[i]
             if ch == '{':
                 depth += 1
             elif ch == '}':
                 depth -= 1
-                if depth == 0:
+                if depth == 0 or i==n-1:
                     chords = text[start+1:i]
                     break
             i += 1
@@ -90,14 +90,14 @@ def extractScore(path):
         start = m.end() - 1
         depth = 0
         i = start
-        n = len(text)
+        n = re.search(r'\\score\s*\{', text).start()-1
         while i < n:
             ch = text[i]
             if ch == '{':
                 depth += 1
             elif ch == '}':
                 depth -= 1
-                if depth == 0:
+                if depth == 0 or i==n-1:
                     verse = text[start+1:i]
                     break
             i += 1
