@@ -6,12 +6,14 @@ Featuring mostly german songs so far and therefore assuming mostly german users 
 
 Ein Liederbuch-Generator auf Lilypond-Basis, der mit LaTex ein pdf-Liederbuch erstellt sowie eine statische web-Version samt midi-Playback als Klavierbegleitung.
 
+Schaue dir den [aktuellen Liederbuch-Build](https://libercantorum.de) einfach mal an!
+
 ## Features
 
 - **PDF-Liederbuch**: Automatische Generierung mittels LaTeX aus Lilypond-Dateien
 - **Web-Version**: Statische Website mit integrierten Noten und Liedtexten
 - **MIDI-Playback**: Klavierbegleitung für alle Lieder mit html-midi-player
-- **Tempo-Anpassung**: Slider-Kontrolle (50%-200%) für MIDI-Wiedergabe. Implementiert als JavaScript-Workaround mit automatischer Original-Tempo-Erkennung und visuellem Feedback.
+- **Tempo-Anpassung**: Geschwindigkeits-Kontrolle (50%-200%) für MIDI-Wiedergabe
 - **Flexible Liedauswahl**: Unterstützung für private Lieder und eigene Zusammenstellungen
 - **Editor-Server**: lokaler Webserver zur Lied-Bearbeitung im Browser
 
@@ -19,12 +21,20 @@ Ein Liederbuch-Generator auf Lilypond-Basis, der mit LaTex ein pdf-Liederbuch er
 
 Aktuell ist LiberCantorum im Alpha-Stadium. Rechne mit Fehlern und ggf. zentralen Änderungen!
 
+## Mitmachen
+
+Du kannst das Lied [Die Gedanken sind frei](https://github.com/polarwinkel/LiberCantorum/tree/main/scores/Die_Gedanken_sind_frei) als Vorlage verwenden und nach dem Muster (vgl. auch unten [Konvention](#Konvention)) eigene Lieder erstellen, z.B. mit dem freien LilyPond-Editor [Frescobaldi](https://frescobaldi.org/).
+
+Gerne kannst du dann die Lieder per pull-request einreichen.
+Wenn du nicht weißt wie das geht kannst du es auch über ein neues issue hier im Repository bereitstellen, dann integriere ich es nach dem testen.
+
 ## Bedienung
 
-LiberCantorum ist aktuell auf die Ausführung auf Linux-Systemen ausgelegt.
+LiberCantorum ist auf die Ausführung auf Linux-Systemen ausgelegt.
 
 Nach dem Klonen des Repositories sind die Pakete aus der `requirements.txt` noch zu installieren (angegeben sind die Paketnamen unter Debian 13 (trixie)).
-Mit z.B. `python3 buildSite.py` wird das Liederbuch anhand der Ordner in `scores` erstellt. Der LcServer kann mit `python3 LcServer.py` gestartet werden und ist dann unter `localhost:4210` im Browser erreichbar.
+Mit z.B. `python3 buildSite.py` wird das Liederbuch anhand der Ordner in `scores` erstellt.
+Der LcServer kann mit `python3 LcServer.py` gestartet werden und ist dann unter `localhost:4210` im Browser erreichbar.
 
 Alternativ kann durch Ausführen der `install.sh` (als Root) der LcServer als Systemdienst installiert werden. Dieser läuft dann unter dem user `lc` in dessen Homeverzeichnis dann auch die Daten liegen.
 
@@ -46,17 +56,17 @@ Dann kann das Liederbuch mit `python3 buildSite.py -s canti.yaml` gebaut werden.
  
 ## Konvention
 
-_(bei nicht-Zustimmung gerne eine Issue erstellen um es zu diskutieren)_
+Als Vorlage dient die Datei `template/score.ly`, in die in den Variablen `musicOne`, `chordsOne` und `verseOne` die Noten, optional Akkorde und optional Liedtexte eingefügt werden.
 
 Die Lilypond-Dateien sollen auf einen Druck auf Din-A5-Format ausgelegt sein, wobei diese auch in schwachem Licht auch von älteren Menschen lesbar sein sollen.
 
 Entgegen vieler Liederbücher sollen die Noten - sofern sinnvoll möglich - nicht zufällig umbrechen, sondern an geeigneten Stellen, um die Orientierung zu verbessern - auf Kosten von etwas Platz.
-Gleiches gilt für die Strophen.
 
 Das automatisch erstellte pdf-Liederbuch ist direkt druckreif. Die erzeugte LaTeX-Quelldatei können aber bei Bedarf nach dem Build manuell angepasst werden, sie bleiben gespeichert.
 
-Alle Noten werden als Lilypond-code `\relative c'` verarbeitet, also relativ zur Oktave c'.
-Die Lilypond-Dateien müssen die Struktur von der Daten `template/score.ly` haben um mit dem LcServer bearbeitet werden zu können.
+Alle Noten werden als Lilypond-code `\relative c'` verarbeitet, also relativ zur Oktave c', um die Eingabe einfach und verlässlich zu machen.
+
+Die Lilypond-Dateien _müssen_ die Struktur von der Daten `template/score.ly` haben um mit dem LcServer bearbeitet werden zu können!
 
 ## LcServer
 

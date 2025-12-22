@@ -152,6 +152,7 @@ def renderAll(selection):
     renderIndex(canti)
     renderBook(canti)
     copyfile('book/LiberCantorum.pdf', 'out/LiberCantorum.pdf')
+    copyfile('book/LiberCantorum-book.pdf', 'out/LiberCantorum-book.pdf')
     sys.stdout.write('all done!\n')
 
 def main():
