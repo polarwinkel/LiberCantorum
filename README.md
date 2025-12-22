@@ -14,6 +14,7 @@ Schaue dir den [aktuellen Liederbuch-Build](https://libercantorum.de) einfach ma
 - **Web-Version**: Statische Website mit integrierten Noten und Liedtexten
 - **MIDI-Playback**: Klavierbegleitung für alle Lieder mit html-midi-player
 - **Tempo-Anpassung**: Geschwindigkeits-Kontrolle (50%-200%) für MIDI-Wiedergabe
+- **Dark-Mode**: Auch für die Noten!
 - **Flexible Liedauswahl**: Unterstützung für private Lieder und eigene Zusammenstellungen
 - **Editor-Server**: lokaler Webserver zur Lied-Bearbeitung im Browser
 
