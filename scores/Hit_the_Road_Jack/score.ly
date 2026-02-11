@@ -9,26 +9,23 @@ myStaffSize = #20
 #(set-global-staff-size 25)
 
 musicOne = \fixed c' {
-  \key d \minor
+  \key c \major
   
   \time 4/4
-  a,8 f4 e8. e16 d4 a,8 a,8 c4 bes,8. bes,16 a,4. \break
-a,8 d4 d8 e8 f4 f8 g8 a2. \break
-f8 g8 a4 a8. a16 d'4 c'8 a8 c'4 bes8. bes16 a4. \break
-a8 a4 f8. f16 f4 e8 f8 g2. \break
-f8 g8 a4 a8. a16 d'4 c'8 a8 c'4 bes8. bes16 a4. \break
-a8 a4 f8. f16 f4 e8 e8 d2. \bar "|."
+  \repeat volta 2 { e8. c16 d4 r4 a,16 r4 r8 a,16 c8. c16 d4 d4 c4 e4 e4 a4 a4 c'4 c'4 a4 \break
+e8. c16 d4 r4 a,16 r4 r8 a,16 c8. c16 d4 d4 c4 a,1 a,2. } \break
+a4 a8. g16 e4 d8. c16 d4 d8. c16 d4 e4 c8. c16 es8. \break
+e16. d4 c8 a,8 a,8 a,8 c4 a,8 a,8 a,4. \break
+a,8 c4 d4 d4 c4 dis8 e4. c8 d8. c16 d8. c16 d8. c16 a,4 a,4 a4 a4 \bar "|."
 }
 chordsOne = \chordmode {
   
 }
 verseOne = \lyricmode {
-  Der Sang ist ver -- schol -- len, der Wein ist ver -- raucht, 
-stumm irr' ich und träu -- mend um -- her.
-Es _ tau -- meln die Häu -- ser vom Stur -- me um -- haucht,
-es tau -- meln die Wel -- len ins Meer, 
-es _ tau -- meln die Häu -- ser vom Stur -- me um -- haucht,
-es tau -- meln die Wel -- len ins Meer.
+  Hit the Road, Jack, and don't you come back no more, no more, no more, no more,
+Hit the Road, Jack, and don't you come back no more _
+Woo wo -- man, oh wo -- man don't treat me so mean. You're the mean -- est old wo -- man that I've ev -- er seen. _
+I guess if you said so _ _ I'd have to pack my things and go. That's right.
 }
 
 \score {
@@ -62,6 +59,6 @@ es tau -- meln die Wel -- len ins Meer.
     }
   >>
   \midi {
-    \tempo 2=54
+    \tempo 2=66
   }
 }

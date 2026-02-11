@@ -21,7 +21,13 @@ chordsOne = \chordmode {
   
 }
 verseOne = \lyricmode {
-  Wohl -- auf, die Luft geht frisch und rein, wer lan -- ge sitzt, muss ro -- sten!
+  <<
+  {Wohl -- auf, die Luft geht frisch und rein, wer lan -- ge sitzt, muss ro -- sten!}
+  \new Lyrics {
+    \set associatedVoice = "melody"
+    Den al -- ler schön -- sten Son -- nen -- schein lässt uns der Him -- mel kos -- ten.
+  }
+>>
 Drum reich mir Stab und Or -- dens -- kleid der fah -- ren -- den Scho -- la _ -- ren,
 ich will zur schö -- nen Som -- mer -- zeit ins Land der Fran -- ken fah -- ren.
 Val -- le -- ri, val -- le -- ra, val -- le -- ri, val -- le -- ra,
