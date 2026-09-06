@@ -79,6 +79,12 @@ p.date {
     }
 }
 /* MIDI Controls Styling */
+midi-player {
+    /* The player's internal controls keep a light background in both themes. */
+    color: #222;
+    color-scheme: light;
+}
+
 .midi-controls {
     padding: 8px;
     margin: 8px 0;
